@@ -71,14 +71,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public LoginResponse getInfoByName(String name) {
+    public List<User> getInfoByName(String name) {
         // TODO Auto-generated method stub
-        User user = userRepository.getUserByName(name);
-        if (user != null) {
-            return new LoginResponse(1, user);
+        List<User> List = userRepository.getUserByName(name);
+        if (List != null) {
+            return List;
         } else {
-            return new LoginResponse(-2, null);
+            System.err.println("没有找到该用户");
+            return List;
         }
+
     }
 
 }

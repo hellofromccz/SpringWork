@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import cn.edu.zucc.entity.User;
 import cn.edu.zucc.service.UserService;
+
+import java.util.List;
 import java.util.Optional;
 import cn.edu.zucc.types.Privilege;
 import cn.edu.zucc.dto.LoginResponse;
@@ -61,11 +63,9 @@ public class UserController {
     public ResponseEntity<?> getInfoByName(@RequestBody UserInfoRequest userInfoRequest) {
         String name = userInfoRequest.getName();
         System.out.println(name);
-        LoginResponse loginResponse = userService.getInfoByName(name);
-        if (loginResponse.getCode() == 1) {
-            return ResponseEntity.ok(loginResponse);
-        } else if (loginResponse.getCode() == -2) {
-            return ResponseEntity.badRequest().body(loginResponse);
+        List<User> UserList = userService.getInfoByName(name);
+        if (UserList != null) {
+            return ResponseEntity.ok(UserList);
         } else {
             return ResponseEntity.status(500).body("Internal Server Error");
         }
@@ -94,19 +94,5 @@ public class UserController {
     public ResponseEntity<?> getAll() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
-    // public ResponseEntity<?> login(@RequestBody LoginRequest loginUser) {
-    // // 假设UserService的login方法会验证用户并返回一个包含code和privilege的对象
-    // LoginResponse loginResponse = userService.login(loginUser);
-    // if (loginResponse.getCode() == 1) {
-    // // 登录成功，根据privilege重定向
-    // return ResponseEntity.ok(loginResponse);
-    // } else if (loginResponse.getCode() == -2) {
-    // // 密码错误或其他登录失败情况
-    // return ResponseEntity.badRequest().body(loginResponse);
-    // } else {
-    // // 其他未知错误
-    // return ResponseEntity.status(500).body("Internal Server Error");
-    // }
-    // }
 
 }

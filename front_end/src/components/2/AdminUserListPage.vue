@@ -279,8 +279,8 @@
 					name: this.condition.name
 				};
 				console.log(body);
-				//axios.post("/usr/get_info_by_name", body)
-				axios.post("/usr/get_all")
+				axios.post("/usr/get_info_by_name", body)
+				// axios.post("/usr/get_all")
 					.then(response => {
 						console.log("得到回应", response.data);
 						if (response.data!=null) {

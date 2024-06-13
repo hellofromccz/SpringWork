@@ -28,6 +28,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     /* 根据姓名获取用户 */
     @Query(value = "SELECT * FROM user WHERE Name = ?1", nativeQuery = true)
-    User getUserByName(String getName);
+    List<User> getUserByName(String getName);
 
 }

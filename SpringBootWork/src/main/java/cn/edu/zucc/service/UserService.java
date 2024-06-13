@@ -27,6 +27,6 @@ public interface UserService {
 
     LoginResponse getinfo(GetInfoRequest getInfoRequest);
 
-    LoginResponse getInfoByName(String name);
+    List<User> getInfoByName(String name);
 
 }
