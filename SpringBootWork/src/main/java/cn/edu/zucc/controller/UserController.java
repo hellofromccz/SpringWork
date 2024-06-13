@@ -1,5 +1,6 @@
 package cn.edu.zucc.controller;
 
+import cn.edu.zucc.dto.GetInfoRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -51,21 +52,34 @@ public class UserController {
             return ResponseEntity.status(500).body("Internal Server Error");
         }
     }
-    // 根据id获取个人信息
-    // @PostMapping("/get_info")
-    // public ResponseEntity<?> login(@RequestBody LoginRequest loginUser) {
-    // // 假设UserService的login方法会验证用户并返回一个包含code和privilege的对象
-    // LoginResponse loginResponse = userService.login(loginUser);
-    // if (loginResponse.getCode() == 1) {
-    // // 登录成功，根据privilege重定向
-    // return ResponseEntity.ok(loginResponse);
-    // } else if (loginResponse.getCode() == -2) {
-    // // 密码错误或其他登录失败情况
-    // return ResponseEntity.badRequest().body(loginResponse);
-    // } else {
-    // // 其他未知错误
-    // return ResponseEntity.status(500).body("Internal Server Error");
-    // }
-    // }
+//     根据id获取个人信息
+    @PostMapping("/get_info")
+    public ResponseEntity<?> getInfo(@RequestBody GetInfoRequest getInfoRequest) {
+        LoginResponse loginResponse = userService.getinfo(getInfoRequest);
+        if (loginResponse.getCode() == 1) {
+            // 登录成功，根据privilege重定向
+            return ResponseEntity.ok(loginResponse);
+        } else if (loginResponse.getCode() == -2) {
+            // 密码错误或其他登录失败情况
+            return ResponseEntity.badRequest().body(loginResponse);
+        } else {
+            // 其他未知错误
+            return ResponseEntity.status(500).body("Internal Server Error");
+        }
+    }
+//     public ResponseEntity<?> login(@RequestBody LoginRequest loginUser) {
+//     // 假设UserService的login方法会验证用户并返回一个包含code和privilege的对象
+//     LoginResponse loginResponse = userService.login(loginUser);
+//     if (loginResponse.getCode() == 1) {
+//     // 登录成功，根据privilege重定向
+//     return ResponseEntity.ok(loginResponse);
+//     } else if (loginResponse.getCode() == -2) {
+//     // 密码错误或其他登录失败情况
+//     return ResponseEntity.badRequest().body(loginResponse);
+//     } else {
+//     // 其他未知错误
+//     return ResponseEntity.status(500).body("Internal Server Error");
+//     }
+//     }
 
 }

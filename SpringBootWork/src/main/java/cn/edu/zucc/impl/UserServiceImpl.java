@@ -1,5 +1,6 @@
 package cn.edu.zucc.impl;
 
+import cn.edu.zucc.dto.GetInfoRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,6 +55,16 @@ public class UserServiceImpl implements UserService {
             return new LoginResponse(1, user); // 假设登录成功，权限为"USER"
         } else {
             return new LoginResponse(-2, null); // 登录失败
+        }
+    }
+
+    @Override
+    public LoginResponse getinfo(GetInfoRequest getInfoRequest){
+        User user = userRepository.getUserById(getInfoRequest.getUserId());
+        if (user != null) {
+            return new LoginResponse(1, user);
+        } else {
+            return new LoginResponse(-2, null);
         }
     }
 }

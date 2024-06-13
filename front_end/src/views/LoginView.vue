@@ -35,7 +35,7 @@
 						if(code == "1"){
 							this.updateId(data.id);
 							if(response.data.usr.status == "SA"){
-								this.$router.push('/admin');
+								this.$router.push('/sys_admin');
 							}else if(response.data.usr.status == "A"){
 								this.$router.push('/admin');
 							}else if(response.data.usr.status == "T"){
