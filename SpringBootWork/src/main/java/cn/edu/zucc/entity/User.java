@@ -1,9 +1,12 @@
 package cn.edu.zucc.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.StringJoiner;
 
 @Entity
+@Data
 @Table(name = "user")
 public class User {
 
@@ -44,80 +47,6 @@ public class User {
 
     public enum Gender {
         男, 女, 其它
-    }
-
-    // Getter methods
-    public Long getUserId() {
-        return userId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    // Setter methods
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     // toString method
