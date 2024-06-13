@@ -1,6 +1,8 @@
 package cn.edu.zucc.service;
 
 import cn.edu.zucc.dto.GetInfoRequest;
+//import cn.edu.zucc.dto.GetNameRequest;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,4 +26,7 @@ public interface UserService {
     LoginResponse login(LoginRequest loginUser);
 
     LoginResponse getinfo(GetInfoRequest getInfoRequest);
+
+    LoginResponse getInfoByName(String name);
+
 }

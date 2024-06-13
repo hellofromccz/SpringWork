@@ -1,6 +1,8 @@
 package cn.edu.zucc.impl;
 
 import cn.edu.zucc.dto.GetInfoRequest;
+//import cn.edu.zucc.dto.GetNameRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -59,7 +61,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public LoginResponse getinfo(GetInfoRequest getInfoRequest){
+    public LoginResponse getinfo(GetInfoRequest getInfoRequest) {
         User user = userRepository.getUserById(getInfoRequest.getUserId());
         if (user != null) {
             return new LoginResponse(1, user);
@@ -67,4 +69,16 @@ public class UserServiceImpl implements UserService {
             return new LoginResponse(-2, null);
         }
     }
+
+    @Override
+    public LoginResponse getInfoByName(String name) {
+        // TODO Auto-generated method stub
+        User user = userRepository.getUserByName(name);
+        if (user != null) {
+            return new LoginResponse(1, user);
+        } else {
+            return new LoginResponse(-2, null);
+        }
+    }
+
 }

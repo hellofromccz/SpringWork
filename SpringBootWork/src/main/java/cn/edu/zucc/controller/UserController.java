@@ -1,6 +1,8 @@
 package cn.edu.zucc.controller;
 
 import cn.edu.zucc.dto.GetInfoRequest;
+//import cn.edu.zucc.dto.GetNameRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,6 +17,7 @@ import cn.edu.zucc.service.UserService;
 import java.util.Optional;
 import cn.edu.zucc.types.Privilege;
 import cn.edu.zucc.dto.LoginResponse;
+import cn.edu.zucc.dto.UserInfoRequest;
 import cn.edu.zucc.dto.LoginRequest;
 
 @CrossOrigin(origins = { "*" })
@@ -53,8 +56,24 @@ public class UserController {
         }
     }
 
+    // 根据名字获取个人信息
+    @PostMapping("/get_info_by_name")
+    public ResponseEntity<?> getInfoByName(@RequestBody UserInfoRequest userInfoRequest) {
+        String name = userInfoRequest.getName();
+        System.out.println(name);
+        LoginResponse loginResponse = userService.getInfoByName(name);
+        if (loginResponse.getCode() == 1) {
+            return ResponseEntity.ok(loginResponse);
+        } else if (loginResponse.getCode() == -2) {
+            return ResponseEntity.badRequest().body(loginResponse);
+        } else {
+            return ResponseEntity.status(500).body("Internal Server Error");
+        }
+
+    }
+    // 获取全部用户信息
+
     // 根据id获取个人信息
-    @CrossOrigin(origins = { "*" })
     @PostMapping("/get_info")
     public ResponseEntity<?> getInfo(@RequestBody GetInfoRequest getInfoRequest) {
         LoginResponse loginResponse = userService.getinfo(getInfoRequest);
@@ -68,6 +87,12 @@ public class UserController {
             // 其他未知错误
             return ResponseEntity.status(500).body("Internal Server Error");
         }
+    }
+
+    // 获取全部用户信息
+    @PostMapping("/get_all")
+    public ResponseEntity<?> getAll() {
+        return ResponseEntity.ok(userService.getAllUsers());
     }
     // public ResponseEntity<?> login(@RequestBody LoginRequest loginUser) {
     // // 假设UserService的login方法会验证用户并返回一个包含code和privilege的对象

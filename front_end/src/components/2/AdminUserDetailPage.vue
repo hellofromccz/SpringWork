@@ -79,7 +79,7 @@
                         </div>
                     </div>           
                 </div>
-                <div style="width: 20%; padding: 20px;">
+                <!-- <div style="width: 20%; padding: 20px;">
                     <img 
                     :src="url()" 
                     :style="imageStyle"
@@ -93,7 +93,7 @@
                         fileAdded="handleUpload"
                         style="align-self: center;"
                     />
-                </div>
+                </div> -->
              
             </VaCard>
             <VaModal

@@ -24,7 +24,7 @@
                             </div>     
                             <div class="add-item">
                                 <div class="add-item-name">性别 </div>
-                                <VaRadio v-model="new_user.gender" :options="['男', '女','其它']" /> 
+                                <VaRadio v-model="new_user.gender" :options="['男', '女']" /> 
                             </div>                           
                             <div class="add-item">
                                 <div class="add-item-name">邮箱 </div>
@@ -43,12 +43,12 @@
                             </div>                                                  
                         </div>
                     </div>
-                    <div class="right">
+                    <!-- <div class="right">
                         <VaFileUpload v-model="new_user.photo" dropzone file-types="jpg,png" 
                         dropZoneText=""
                         uploadButtonText="上传头像"
                         style="width: 90%; height: 100%; align-self: center;"/>
-                    </div>                
+                    </div>                 -->
                 </div>
             </div>
             <div class="tool-detail" v-if="action==2">
@@ -67,8 +67,9 @@
 					<VaButton @click="comfirmSelectName" style="width: 120px;">按姓名查询</VaButton>
 				</div>
 				<div class="select-item">
-					<VaRadio style="margin-right: 20px;" v-model="condition.gender" :options="['男', '女','其它']"  />
-					<VaButton @click="comfirmSelectGender" style="width: 120px;">按性别筛选</VaButton>
+					<VaInput v-model="condition.id" placeholder="请输入id" style="margin-right: 20px;"/>
+					<!-- <VaRadio style="margin-right: 20px;" v-model="condition.gender" :options="['男', '女','其它']"  /> -->
+					<VaButton @click="comfirmSelectGender" style="width: 120px;">按id筛选</VaButton>
 				</div>
 			</div>
 			<VaCard style="margin-bottom: 10px; margin-top: 10px;">
@@ -84,12 +85,20 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr v-for="user in users" :key="user.id" @click="showDetail(user.id)">
+								<tr v-for="user in users" :key="user.userId" @click="showDetail(user.id)">
 									<td>{{ user.name }}</td>
-									<td>{{ user.id }}</td>
+									<td>{{ user.userId }}</td>
 									<td>{{ user.status }}</td>
 									<td>{{ user.gender }}</td>
 								</tr>
+								
+								
+								<!-- <tr @click="showDetail(info.useId)">
+									<td>{{ info.name }}</td>
+									<td>{{ info.userId }}</td>
+									<td>{{ info.status }}</td>
+									<td>{{ info.gender }}</td>
+								</tr> -->
 							</tbody>
 						</table>
 					</div>
@@ -132,9 +141,21 @@
 					address: '',
 				},
 				condition: {
-					name: '请输入姓名',
-					gender: '',
-				}
+					id: '',
+					name:'',
+
+				},
+				info: {
+                    name: "",
+                    userId: null,
+                    status:'',
+                    password: '',
+                    gender: '',
+                    age: null,
+                    email: "",
+                    phone:"",
+                    address:"",
+                }
 			};
 		},
 		watch: {
@@ -144,16 +165,16 @@
 		},
 		methods: {
 			getUsersDefault() {
-				const body = {
-					uid: this.uid,
-					data: "default"
-				};
-				console.log(body);
-				axios.post("/admin/user_management/", body)
+				// const body = {
+				// 	uid: this.uid,
+				// 	data: "default"
+				// };
+				// console.log(body);
+				axios.post("/usr/get_all")
 					.then(response => {
 						console.log("得到回应", response.data);
-						if (response.data.code == "1") {
-							this.users = response.data.data;
+						if (response.data!=null) {
+							this.users = response.data;
 						} else if (response.data.code == "-1") {
 							console.log(response.data.message);
 						} else {
@@ -254,15 +275,16 @@
 			},
 			comfirmSelectName(){
 				const body = {
-					id: this.uid,
-					data: this.condition.name
+					//id: this.uid,
+					name: this.condition.name
 				};
 				console.log(body);
-				axios.post("/admin/user_management/get_by_name", body)
+				//axios.post("/usr/get_info_by_name", body)
+				axios.post("/usr/get_all")
 					.then(response => {
 						console.log("得到回应", response.data);
-						if (response.data.code == "1") {
-							this.users = response.data.data;
+						if (response.data!=null) {
+							this.users = response.data;
 						} else if (response.data.code == "-1") {
 							console.log(response.data.message);
 						} else {
@@ -287,15 +309,16 @@
 			},
 			comfirmSelectGender(){
 				const body = {
-					id: this.uid,
-					data: this.condition.gender
+					userId: this.condition.id
+					//data: this.condition.gender
 				};
 				console.log(body);
-				axios.post("/admin/user_management/get_by_gender", body)
+				axios.post("/usr/get_info", body)
 					.then(response => {
 						console.log("得到回应", response.data);
 						if (response.data.code == "1") {
-							this.users = response.data.data;
+							this.info = response.data.usr;
+							console.log("here",response.data.usr);
 						} else if (response.data.code == "-1") {
 							console.log(response.data.message);
 						} else {

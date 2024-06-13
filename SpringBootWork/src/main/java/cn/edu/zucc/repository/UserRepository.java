@@ -1,5 +1,7 @@
 package cn.edu.zucc.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,4 +25,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     /* 根据账号密码验证登录 */
     @Query(value = "SELECT * FROM user WHERE UserID = :userId AND Password = :password", nativeQuery = true)
     User findByUserIdAndPassword(@Param("userId") Long userId, @Param("password") String password);
+
+    /* 根据姓名获取用户 */
+    @Query(value = "SELECT * FROM user WHERE Name = ?1", nativeQuery = true)
+    User getUserByName(String getName);
+
 }
