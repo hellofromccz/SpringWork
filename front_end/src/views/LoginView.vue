@@ -36,11 +36,11 @@
 							this.updateId(data.id);
 							if(response.data.usr.status == "SA"){
 								this.$router.push('/admin');
-							}else if(response.data.usr.status == "SA"){
+							}else if(response.data.usr.status == "A"){
 								this.$router.push('/admin');
 							}else if(response.data.usr.status == "T"){
 								this.$router.push('/teacher');
-							}else if(response.data.usr.status == "A"){
+							}else if(response.data.usr.status == "S"){
 								this.$router.push('/student');
 							}							
 						}else if(code == "-2"){
