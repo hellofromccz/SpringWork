@@ -29,4 +29,6 @@ public interface UserService {
 
     List<User> getInfoByName(String name);
 
+    List<User> getInfoById(Long id);
+
 }

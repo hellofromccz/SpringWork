@@ -316,8 +316,8 @@
 				axios.post("/usr/get_info", body)
 					.then(response => {
 						console.log("得到回应", response.data);
-						if (response.data.code == "1") {
-							this.info = response.data.usr;
+						if (response.data!=null) {
+							this.users = response.data;
 							console.log("here",response.data.usr);
 						} else if (response.data.code == "-1") {
 							console.log(response.data.message);

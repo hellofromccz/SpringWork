@@ -1,7 +1,5 @@
 package cn.edu.zucc.dto;
 
-import cn.edu.zucc.entity.*;
-
 public class UserInfoRequest {
     private String name;
 

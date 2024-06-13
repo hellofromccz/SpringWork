@@ -76,15 +76,12 @@ public class UserController {
     // 根据id获取个人信息
     @PostMapping("/get_info")
     public ResponseEntity<?> getInfo(@RequestBody GetInfoRequest getInfoRequest) {
-        LoginResponse loginResponse = userService.getinfo(getInfoRequest);
-        if (loginResponse.getCode() == 1) {
-            // 登录成功，根据privilege重定向
-            return ResponseEntity.ok(loginResponse);
-        } else if (loginResponse.getCode() == -2) {
-            // 密码错误或其他登录失败情况
-            return ResponseEntity.badRequest().body(loginResponse);
+        Long id = getInfoRequest.getUserId();
+        System.out.println(id);
+        List<User> UserList = userService.getInfoById(id);
+        if (UserList != null) {
+            return ResponseEntity.ok(UserList);
         } else {
-            // 其他未知错误
             return ResponseEntity.status(500).body("Internal Server Error");
         }
     }

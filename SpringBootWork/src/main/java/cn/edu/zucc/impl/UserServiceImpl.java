@@ -83,4 +83,15 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public List<User> getInfoById(Long id) {
+        // TODO Auto-generated method stub
+        List<User> List = userRepository.getInfoByID(id);
+        if (List != null) {
+            return List;
+        } else {
+            System.err.println("没有找到该用户");
+            return List;
+        }
+    }
 }
