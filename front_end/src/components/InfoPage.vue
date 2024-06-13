@@ -55,12 +55,14 @@
                         </div>
                         <div class="item">
                             <div class="item-name">电话 </div>
-                            <div class="item-content">{{ info.phone }}</div>
+                            <input v-model="info.phone" style="width: 35%;">
+                            <!-- <div class="item-content">{{ info.phone }}</div> -->
                         </div>
                         
                         <div class="item">
                             <div class="item-name">住址 </div>
-                            <div class="item-content">{{ info.address }}</div>
+                            <input v-model="info.address" style="width: 35%;">
+                            <!-- <div class="item-content">{{ info.address }}</div> -->
                         </div>
 
                         <div class="item">
