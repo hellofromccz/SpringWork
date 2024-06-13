@@ -68,13 +68,13 @@
                         </div>
                     </div>           
                 </div>
-                <div style="width: 20%; padding: 20px;">
+                <!-- <div style="width: 20%; padding: 20px;">
                     <img 
                     :src="url()" 
                     :style="imageStyle"
                     @error="onImageError"
-                    />
-                    <VaFileUpload
+                    /> -->
+                    <!-- <VaFileUpload
                         v-model="info.photo"
                         uploadButtonText="修改头像"
                         type="gallery"
@@ -82,8 +82,8 @@
                         modelValue="info.photo"
                         fileAdded="handleUpload"
                         style="align-self: center; "
-                    />
-                </div>
+                    /> 
+                </div>-->
             </VaCard>
         </div>
 
@@ -92,9 +92,13 @@
 
 <script>
     import axios from '@/axios';
+    import { mapGetters } from 'vuex';
     export default {
         name: 'InfoPage',
         components:{
+        },
+        computed: {
+            ...mapGetters(['getId']), // 映射 getId getter 到本地计算属性
         },
         props: {
             value_uid: {
@@ -111,14 +115,14 @@
                 edit: false,
                 uid: this.value_uid,
                 oid: this.value_oid,
-                defaultImageUrl:'http://172.30.200.230:8080/user-profile/default.png',
-                imageStyle: {
-                    width: '144px',
-                    height: '144px',
-                    objectFit: 'cover', // 确保图片以压缩方式显示
-                    border: '1px solid #ddd',
-                    borderRadius: '4px'
-                },
+                // defaultImageUrl:'http://172.30.200.230:8080/user-profile/default.png',
+                // imageStyle: {
+                //     width: '144px',
+                //     height: '144px',
+                //     objectFit: 'cover', // 确保图片以压缩方式显示
+                //     border: '1px solid #ddd',
+                //     borderRadius: '4px'
+                // },
                 info: {
                     name: "",
                     id: null,
@@ -143,29 +147,29 @@
             },
         },
         methods:{
-            url(){
-                return 'http://172.30.200.230:8080/user-profile/' + Math.trunc(this.uid % 100000000).toString() + '.png';
-            },
-            onImageError(event){
-                event.target.src = this.defaultImageUrl;
-            },
+            // url(){
+            //     return 'http://172.30.200.230:8080/user-profile/' + Math.trunc(this.uid % 100000000).toString() + '.png';
+            // },
+            // onImageError(event){
+            //     event.target.src = this.defaultImageUrl;
+            // },
             getInfo(){
-                const body = {uid: this.uid, oid: this.oid};
+                const body = {userId: this.getId};
                 console.log(body);
-                axios.post("/get_info", body)
+                axios.post("/usr/get_info", body)
                     .then(response =>{
                         console.log("得到回应", response.data);
                         if(response.data.code == "1"){
                             this.info = {
-                                name: response.data.data.name,
-                                id: response.data.data.id,
-                                status: response.data.data.status,
-                                password: response.data.data.password,
-                                age: response.data.data.age,
-                                gender: response.data.data.gender,
-                                email: response.data.data.email,
-                                phone: response.data.data.phone,
-                                address: response.data.data.address,
+                                name: response.data.usr.name,
+                                id: response.data.usr.userId,
+                                status: response.data.usr.status,
+                                password: response.data.usr.password,
+                                age: response.data.usr.age,
+                                gender: response.data.usr.gender,
+                                email: response.data.usr.email,
+                                phone: response.data.usr.phone,
+                                address: response.data.usr.address,
                             };
                         }else if(response.data.code == "-1"){
                             console.log(response.data.message);
@@ -239,33 +243,33 @@
 							console.log(error.config);
 					});                 
             },
-            handleUpload(){
-                console.log("upload photo...");
-                const formData = new FormData();  
-                formData.append('id', this.uid.toString()); // 注意，需要将long转为string  
-                formData.append('photo', this.info.photo);  
+            // handleUpload(){
+            //     console.log("upload photo...");
+            //     const formData = new FormData();  
+            //     formData.append('id', this.uid.toString()); // 注意，需要将long转为string  
+            //     formData.append('photo', this.info.photo);  
             
-                axios.post('/upload', formData, {  
-                    headers: {  
-                        'Content-Type': 'multipart/form-data'  
-                    }  
-                })  
-                .then(response => {  
-                    // 处理成功响应  
-                    console.log(response);  
-                })  
-                .catch(error => {  
-                    // 处理错误  
-                    console.error(error);  
-                });  
-            }
+            //     axios.post('/upload', formData, {  
+            //         headers: {  
+            //             'Content-Type': 'multipart/form-data'  
+            //         }  
+            //     })  
+            //     .then(response => {  
+            //         // 处理成功响应  
+            //         console.log(response);  
+            //     })  
+            //     .catch(error => {  
+            //         // 处理错误  
+            //         console.error(error);  
+            //     });  
+            // }
         },
         mounted(){
             this.uid = this.value_uid;
             this.oid = this.value_oid;
             this.getInfo();
-            console.log('uid = ', this.uid);
-            console.log('http://172.30.200.230:8080/user-profile/' + Math.trunc(this.uid % 100000000).toString() + '.png');
+            // console.log('uid = ', this.uid);
+            // console.log('http://172.30.200.230:8080/user-profile/' + Math.trunc(this.uid % 100000000).toString() + '.png');
         }
     };
 </script>

@@ -2,7 +2,7 @@
     <div style="height: 100vh">
       <VaSidebar>
         
-        <div class="profile-box">
+        <!-- <div class="profile-box">
             <VaAvatar
                     :src="url()"
                     fallbackSrc="http://172.30.200.230:8080/user-profile/default.png"
@@ -11,7 +11,7 @@
                     size="large"
                     color="#FFFFFF"
             />       
-        </div>
+        </div> -->
              
 
           
@@ -102,9 +102,9 @@ export default{
             ...mapState(['id']), // 映射state中的id到本组件的computed属性id
     },    
     methods: {
-      url(){
-        return 'http://172.30.200.230:8080/user-profile/' + (this.id % 100000000).toString() + '.png';
-      },
+      // url(){
+      //   return 'http://172.30.200.230:8080/user-profile/' + (this.id % 100000000).toString() + '.png';
+      // },
       setPermission(x){
         console.log("permission set to ", x);
         this.permission = x;

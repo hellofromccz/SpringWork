@@ -131,14 +131,14 @@
         data(){
             
             return {
-                defaultImageUrl:'http://172.30.200.230:8080/user-profile/default.png',
-                imageStyle: {
-                    width: '144px',
-                    height: '144px',
-                    objectFit: 'cover', // 确保图片以压缩方式显示
-                    border: '1px solid #ddd',
-                    borderRadius: '4px'
-                },
+                // defaultImageUrl:'http://172.30.200.230:8080/user-profile/default.png',
+                // imageStyle: {
+                //     width: '144px',
+                //     height: '144px',
+                //     objectFit: 'cover', // 确保图片以压缩方式显示
+                //     border: '1px solid #ddd',
+                //     borderRadius: '4px'
+                // },
                 edit: false,
                 uid: this.value_uid,
                 showModel: false,
@@ -162,12 +162,12 @@
             },
         },
         methods:{
-            url(){
-                return 'http://172.30.200.230:8080/user-profile/' + Math.trunc(Number(this.$route.params.oid) % 100000000).toString() + '.png';
-            },
-            onImageError(event){
-                event.target.src = this.defaultImageUrl;
-            },
+            // url(){
+            //     return 'http://172.30.200.230:8080/user-profile/' + Math.trunc(Number(this.$route.params.oid) % 100000000).toString() + '.png';
+            // },
+            // onImageError(event){
+            //     event.target.src = this.defaultImageUrl;
+            // },
             getInfo(){
                 const body = {uid: this.uid, oid: Number(this.$route.params.oid)};
                 console.log(body);
