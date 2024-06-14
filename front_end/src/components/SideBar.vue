@@ -1,20 +1,6 @@
 <template>
     <div style="height: 100vh">
       <VaSidebar>
-        
-        <!-- <div class="profile-box">
-            <VaAvatar
-                    :src="url()"
-                    fallbackSrc="http://172.30.200.230:8080/user-profile/default.png"
-                    class="mr-6"
-                    font-size="30px"
-                    size="large"
-                    color="#FFFFFF"
-            />       
-        </div> -->
-             
-
-          
         <VaSidebarItem :active="choice==1" @click="setChoice(1)">
           <VaSidebarItemContent>
             <VaIcon name="home" />
@@ -77,7 +63,7 @@
         <VaSidebarItem :active="choice==9" @click="setChoice(9)">
           <VaSidebarItemContent>
             <VaIcon name="settings" />
-            <VaSidebarItemTitle>设置</VaSidebarItemTitle>
+            <VaSidebarItemTitle>登出</VaSidebarItemTitle>
           </VaSidebarItemContent>
         </VaSidebarItem>
       </VaSidebar>
@@ -162,6 +148,9 @@ export default{
         }else if(this.choice == 8){
           console.log("push to /student/course");
           this.$router.push("/student/course");
+        }else if(this.choice == 9){
+          console.log("push to /login");
+          this.$router.push("/login");
         }
       },
       setHighlight(x){

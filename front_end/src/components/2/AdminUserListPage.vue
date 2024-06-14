@@ -6,7 +6,7 @@
             <VaTabs v-model="value" style="margin-bottom: 10px;">
                 <template #tabs>
                     <VaTab icon="va-plus" label="添加用户" @click="add"/>
-                    <VaTab icon="va-minus" label="删除所有" @click="deleteAll"/>
+                    <!-- <VaTab icon="va-minus" label="删除所有" @click="deleteAll"/> -->
                     <VaTab icon="book" label="筛选与查询" @click="select"/>
                 </template>
             </VaTabs>
@@ -43,12 +43,6 @@
                             </div>                                                  
                         </div>
                     </div>
-                    <!-- <div class="right">
-                        <VaFileUpload v-model="new_user.photo" dropzone file-types="jpg,png" 
-                        dropZoneText=""
-                        uploadButtonText="上传头像"
-                        style="width: 90%; height: 100%; align-self: center;"/>
-                    </div>                 -->
                 </div>
             </div>
             <div class="tool-detail" v-if="action==2">
