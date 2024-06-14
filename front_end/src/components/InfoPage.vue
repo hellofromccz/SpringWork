@@ -216,12 +216,24 @@
                 }else{
                     console.log("state changed to show");
                 }
-                const body = {uid: this.uid, oid: this.uid, user: this.info};
+                // let statusValue = this.info.status === "教师" ? "T" : "S"; // 三元运算符简化条件赋值
+				const body = {
+					userId: this.getId,
+					name: this.info.name,
+					status: this.info.status,
+					gender: this.info.gender,
+					email: this.info.email,
+					phone: this.info.phone,
+    				address: this.info.address,
+					password:'abc',
+					age: '21',
+				};
+                //const body = {uid: this.uid, oid: this.uid, user: this.info};
                 console.log(body);
-                axios.post("/modify_info", body)
+                axios.post("/usr/update_user", body)
                     .then(response =>{
                         console.log("得到回应", response.data);
-                        if(response.data.code == "1"){
+                        if(response.data!=null){
 
                         }else if(response.data.code == "-1"){
                             console.log(response.data.message);
