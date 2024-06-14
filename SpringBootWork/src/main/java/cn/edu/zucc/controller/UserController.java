@@ -109,6 +109,14 @@ public class UserController {
         }
     }
 
+    // 根据id删除用户
+    @PostMapping("/delete_user")
+    public ResponseEntity<?> deleteUser(@RequestBody User user) {
+        System.out.println(user);
+        userService.deleteUser(user.getUserId());
+        return ResponseEntity.ok("删除成功");
+    }
+
     // 获取全部用户信息
     @PostMapping("/get_all")
     public ResponseEntity<?> getAll() {

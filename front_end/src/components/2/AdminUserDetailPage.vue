@@ -273,12 +273,23 @@
 					});                   
             },
             comfirmDelete(){
-                const body = {uid: this.uid, oid: this.$route.params.oid};
+                let statusValue = this.info.status === "教师" ? "T" : "S"; // 三元运算符简化条件赋值
+				const body = {
+					userId: Number(this.$route.params.oid),
+					name: this.info.name,
+					status: statusValue,
+					gender: this.info.gender,
+					email: this.info.email,
+					phone: this.info.phone,
+    				address: this.info.address,
+					password:'abc',
+					age: '21',
+				};
                 console.log(body);
-                axios.post("/admin/user_management/delete", body) // 后端没处理/admin/show_course的请求，只有teacher/show_course的
+                axios.post("/usr/delete_user", body) // 
                     .then(response =>{
                         console.log("得到回应", response.data);
-                        if(response.data.code == "1"){
+                        if(response.data!=null){
                             this.$router.push("/admin/user");
                         }else if(response.data.code == "-1"){
                             console.log(response.data.message);
