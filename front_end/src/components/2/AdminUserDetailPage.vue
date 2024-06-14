@@ -118,6 +118,7 @@
 
 <script>
     import axios from '@/axios';
+    import { mapGetters } from 'vuex';
     export default {
         name: 'InfoPage',
         components:{
@@ -128,24 +129,23 @@
                 required: true
             },
         },
+        computed: {
+            ...mapGetters(['getId']), // 映射 getId getter 到本地计算属性
+            userId() {
+            return this.$route.params.id || null; // 如果id不存在，则默认为null
+       },
+        },
         data(){
             
             return {
-                // defaultImageUrl:'http://172.30.200.230:8080/user-profile/default.png',
-                // imageStyle: {
-                //     width: '144px',
-                //     height: '144px',
-                //     objectFit: 'cover', // 确保图片以压缩方式显示
-                //     border: '1px solid #ddd',
-                //     borderRadius: '4px'
-                // },
                 edit: false,
                 uid: this.value_uid,
+                //userId: this.userId,
                 showModel: false,
                 info: {
                     name: "",
                     id: null,
-                    password:'',
+                    password:'abc',
                     age: null,
                     status:'',
                     gender: '',
@@ -162,27 +162,32 @@
             },
         },
         methods:{
-            // url(){
-            //     return 'http://172.30.200.230:8080/user-profile/' + Math.trunc(Number(this.$route.params.oid) % 100000000).toString() + '.png';
-            // },
-            // onImageError(event){
-            //     event.target.src = this.defaultImageUrl;
-            // },
+            checkIdInRoute() {
+                const id = this.$route.params.id;
+                if (!id) {
+                    console.warn('ID 参数缺失');
+                    // 可以选择抛出错误、跳转到错误页或采取其他措施
+                } else {
+                    console.log('路由中的ID:', id);
+                    // 继续执行后续逻辑，比如发起API请求等
+                }
+                },
             getInfo(){
-                const body = {uid: this.uid, oid: Number(this.$route.params.oid)};
+                const body = {userId:Number(this.$route.params.oid)};
+                //const body = {userId: this.$route.query.id};
                 console.log(body);
-                axios.post("/get_info", body)
+                axios.post("/usr/get_info", body)
                     .then(response =>{
                         console.log("得到回应", response.data);
-                        if(response.data.code == "1"){
+                        if(response.data!=null){
                             this.info = {
-                                name: response.data.data.name,
-                                id: response.data.data.id,
-                                status: response.data.data.status,
-                                gender: response.data.data.gender,
-                                email: response.data.data.email,
-                                phone: response.data.data.phone,
-                                address: response.data.data.address,
+                                name: response.data[0].name,
+                                id: response.data[0].userId,
+                                status: response.data[0].status,
+                                gender: response.data[0].gender,
+                                email: response.data[0].email,
+                                phone: response.data[0].phone,
+                                address: response.data[0].address,
                             };
                         }else if(response.data.code == "-1"){
                             console.log(response.data.message);
@@ -214,6 +219,7 @@
                     console.log("state changed to show");
                 }
             },
+            
             setUid(x){
                 this.uid = x;
             },
@@ -222,12 +228,26 @@
             },
             submit(){
                 this.edit = !(this.edit);
-                const body = {id: this.uid, user: this.info};
+                //const body = {id: this.uid, user: this.info};
+                let statusValue = this.info.status === "教师" ? "T" : "S"; // 三元运算符简化条件赋值
+				const body = {
+					userId: Number(this.$route.params.oid),
+					name: this.info.name,
+					status: statusValue,
+					gender: this.info.gender,
+					email: this.info.email,
+					phone: this.info.phone,
+    				address: this.info.address,
+					password:'abc',
+					age: '21',
+				};
+				// console.log('这是body:',body);
+                //const body = { user: this.info};
                 console.log(body);
-                axios.post("/modify_info", body)
+                axios.post("/usr/update_user", body)
                     .then(response =>{
                         console.log("得到回应", response.data);
-                        if(response.data.code == "1"){
+                        if(response.data!=null){
                             this.getUsersDefault();
                             location.reload();
                         }else if(response.data.code == "-1"){
@@ -287,8 +307,14 @@
             this.uid = this.value_uid;
             this.oid = this.value_oid;
             this.getInfo();
+            this.checkIdInRoute();
+        },
+        watch: {
+            '$route'(to, from) {
+                this.checkIdInRoute();
+            },
         }
-    };
+    }
 </script>
 
 <style scoped lang="scss">

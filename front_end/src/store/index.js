@@ -4,6 +4,7 @@ import createPersistedState from 'vuex-persistedstate';
 export default createStore({
   state: {
     id: null,
+    cid:null,
   },
   mutations: {
     setId(state, id) {

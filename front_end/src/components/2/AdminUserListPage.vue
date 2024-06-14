@@ -85,7 +85,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr v-for="user in users" :key="user.userId" @click="showDetail(user.id)">
+								<tr v-for="user in users" :key="user.userId" @click="showDetail(user.userId)">
 									<td>{{ user.name }}</td>
 									<td>{{ user.userId }}</td>
 									<td>{{ user.status }}</td>

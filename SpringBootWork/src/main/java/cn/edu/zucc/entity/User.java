@@ -22,14 +22,14 @@ public class User {
     @Column(name = "Status", nullable = false, length = 1)
     private Status status;
 
-    @Column(name = "Password", nullable = false, length = 255, columnDefinition = "varchar(255) default '00000000'")
+    @Column(name = "Password", nullable = true, length = 255, columnDefinition = "varchar(255) default '00000000'")
     private String password;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "Gender", nullable = false, length = 1)
     private Gender gender;
 
-    @Column(name = "Age", nullable = false)
+    @Column(name = "Age", nullable = true)
     private Integer age;
 
     @Column(name = "Phone", nullable = false, length = 255)

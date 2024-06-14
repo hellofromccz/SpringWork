@@ -97,6 +97,18 @@ public class UserController {
         }
     }
 
+    // 修改用户信息
+    @PostMapping("/update_user")
+    public ResponseEntity<?> updateUser(@RequestBody User user) {
+        System.out.println(user);
+        User newUser = userService.updateUser(user);
+        if (newUser != null) {
+            return ResponseEntity.ok(newUser);
+        } else {
+            return ResponseEntity.status(500).body("Internal Server Error");
+        }
+    }
+
     // 获取全部用户信息
     @PostMapping("/get_all")
     public ResponseEntity<?> getAll() {

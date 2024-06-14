@@ -161,17 +161,17 @@
                 axios.post("/usr/get_info", body)
                     .then(response =>{
                         console.log("得到回应", response.data);
-                        if(response.data.code == "1"){
+                        if(response.data!=null){
                             this.info = {
-                                name: response.data.usr.name,
-                                id: response.data.usr.userId,
-                                status: response.data.usr.status,
-                                password: response.data.usr.password,
-                                age: response.data.usr.age,
-                                gender: response.data.usr.gender,
-                                email: response.data.usr.email,
-                                phone: response.data.usr.phone,
-                                address: response.data.usr.address,
+                                name: response.data[0].name,
+                                id: response.data[0].userId,
+                                status: response.data[0].status,
+                                password: response.data[0].password,
+                                age: response.data[0].age,
+                                gender: response.data[0].gender,
+                                email: response.data[0].email,
+                                phone: response.data[0].phone,
+                                address: response.data[0].address,
                             };
                         }else if(response.data.code == "-1"){
                             console.log(response.data.message);
