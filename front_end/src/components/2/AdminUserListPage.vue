@@ -132,13 +132,14 @@
 				action: 0,
 				users: [],
 				new_user: {
-					name: '',
-					status: '',
-					gender: '',
-					password: '',
-					email: '',
-					phone: '',
-					address: '',
+					Name: '',
+					Gender: '',
+					Status: '',
+					Email: '',
+					Password: 'abc', 
+					Phone: '',
+					Address: '',
+					Age:'21',
 				},
 				condition: {
 					id: '',
@@ -215,24 +216,33 @@
 					});
 					return;
 				}
+				let statusValue = this.new_user.status === "教师" ? "T" : "S"; // 三元运算符简化条件赋值
 				const body = {
-					id: this.uid,
-					user: this.new_user
+					//id: this.uid,
+					name: this.new_user.name,
+					status: statusValue,
+					gender: this.new_user.gender,
+					email: this.new_user.email,
+					phone: this.new_user.phone,
+    				address: this.new_user.address,
+					password:'abc',
+					age: '22',
 				};
-				console.log(body);
-				axios.post("/admin/user_management/add", body)
+				console.log('这是body:',body);
+				axios.post("/usr/add_user", body)
 					.then(response => {
 						console.log("得到回应", response.data);
-						if (response.data.code == "1") {
+						if (response.data!=null) {
 							this.getUsersDefault();
 							this.new_user = {
-								name: '',
-								gender: '',
-								status: '',
-								email: '',
-								password: '', 
+								Name: '',
+								Gender: '',
+								Status: '',
+								Email: '',
+								Password: 'abc', 
 								phone: '',
-								address: '',
+								Address: '',
+								Age:'21',
 							};
 						} else if (response.data.code == "-1") {
 							console.log(response.data.message);

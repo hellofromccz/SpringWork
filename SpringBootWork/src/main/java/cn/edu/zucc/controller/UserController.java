@@ -71,7 +71,18 @@ public class UserController {
         }
 
     }
-    // 获取全部用户信息
+
+    // 添加用户
+    @PostMapping("/add_user")
+    public ResponseEntity<?> addUser(@RequestBody User user) {
+        System.out.println(user);
+        User newUser = userService.createUser(user);
+        if (newUser != null) {
+            return ResponseEntity.ok(newUser);
+        } else {
+            return ResponseEntity.status(500).body("Internal Server Error");
+        }
+    }
 
     // 根据id获取个人信息
     @PostMapping("/get_info")
