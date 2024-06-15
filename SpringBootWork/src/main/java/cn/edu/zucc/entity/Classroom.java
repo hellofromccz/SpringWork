@@ -13,13 +13,13 @@ public class Classroom {
     @Column(name = "ClassroomID")
     private int classroomID;
 
-    @Column(name = "ClassroomName")
+    @Column(name = "Classroomname")
     private String classroomName;
 
-    @Column(name = "CampusInformation")
+    @Column(name = "Campusinformation")
     private String campusInformation;
 
-    @Column(name = "ClassroomCapacity")
+    @Column(name = "Classroomcapacity")
     private int classroomCapacity;
 
     @Column(name = "Special_Conditions_of_Classrooms")
@@ -27,6 +27,6 @@ public class Classroom {
     private SpecialConditions specialConditions;
 
     public enum SpecialConditions {
-        无设备, 有投影仪, 有电脑, 有投影仪和电脑
+        无设备, 有多媒体设备, 数字化教室
     }
 }
