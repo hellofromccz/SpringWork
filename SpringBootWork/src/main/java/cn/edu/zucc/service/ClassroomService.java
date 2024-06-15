@@ -1,9 +1,13 @@
 package cn.edu.zucc.service;
 
 import cn.edu.zucc.entity.Classroom;
-import org.springframework.stereotype.Service;
 
-@Service
+import java.util.List;
+
 public interface ClassroomService {
-    Classroom createClassroom(Classroom classroom);
+    List<Classroom> findByName(String name);
+    List<Classroom> findAll();
+    Classroom addClassroom(Classroom classroom);
+    Classroom deleteById(int id);
+    Classroom updateClassroom(Classroom classroom);
 }

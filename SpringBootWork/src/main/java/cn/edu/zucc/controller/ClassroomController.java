@@ -3,28 +3,37 @@ package cn.edu.zucc.controller;
 import cn.edu.zucc.entity.Classroom;
 import cn.edu.zucc.service.ClassroomService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = { "*" })
-@RestController
-@RequestMapping("/classroom")
-public class ClassroomController {
-    private final ClassroomService classroomService;
+import java.util.List;
 
+@RestController
+@RequestMapping("/classrooms")
+public class ClassroomController {
     @Autowired
-    public ClassroomController(ClassroomService classroomService) {
-        this.classroomService = classroomService;
+    private ClassroomService classroomService;
+
+    @GetMapping("/name/{name}")
+    public List<Classroom> findByName(@PathVariable String name) {
+        return classroomService.findByName(name);
     }
 
-    @PostMapping("/add_classroom")
-    public ResponseEntity<?> addClassroom(@RequestBody Classroom classroom) {
-        System.out.println(classroom);
-        Classroom newClassroom = classroomService.createClassroom(classroom);
-        if (newClassroom == null) {
-            return ResponseEntity.status(500).body("Internal Server Error");
-        } else {
-            return ResponseEntity.ok(newClassroom);
-        }
+    @GetMapping
+    public List<Classroom> findAll() {
+        return classroomService.findAll();
+    }
+
+    @PostMapping("/addClassroom")
+    public Classroom addClassroom(@RequestBody Classroom classroom) {
+        return classroomService.addClassroom(classroom);
+    }
+    @DeleteMapping("/{id}")
+    public Classroom deleteById(@PathVariable int id) {
+        return classroomService.deleteById(id);
+    }
+
+    @PutMapping
+    public Classroom updateClassroom(@RequestBody Classroom classroom) {
+        return classroomService.updateClassroom(classroom);
     }
 }
