@@ -6,11 +6,14 @@ import javax.persistence.*;
 @Table(name = "teacher_select_course")
 public class TeacherSelectCourse {
     @Id
-    private int Tcourseid;
+    @Column(name = "Tcourseid", columnDefinition = "int(10) unsigned zerofill")
+    private Long tcourseid;
+
     @ManyToOne
-    @JoinColumn(name = "Courseid")
+    @JoinColumn(name = "Courseid", referencedColumnName = "Courseid")
     private Course course;
+
     @ManyToOne
-    @JoinColumn(name = "Teacherid")
+    @JoinColumn(name = "Teacherid", referencedColumnName = "TeacherID")
     private Teacher teacher;
 }

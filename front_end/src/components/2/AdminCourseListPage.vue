@@ -234,8 +234,15 @@
 				}
 				console.log("new_course.time:", this.new_course.time);
 				const body = {
-					id: this.uid,
-					course: this.new_course
+					// id: this.uid,
+					// course: this.new_course
+					name: this.new_course.name,
+					credit: this.new_course.credit,
+					teacherId: this.new_course.teacherId,
+					classroomId: this.new_course.classroomId,
+					capacity: this.new_course.capacity,
+					compulsory: this.new_course.compulsory,
+					courseTime: this.new_course.time
 				};
 				console.log('这是body:',body);
 				axios.post("/course/add_course", body)
@@ -297,6 +304,7 @@
 				const body = {
 					// uid: this.uid,
 					name: this.condition
+
 				};
 				console.log("这是body:", body);
 				axios.post("/course/get_info_by_name", body)

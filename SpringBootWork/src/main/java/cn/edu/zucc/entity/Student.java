@@ -10,7 +10,7 @@ import java.util.*;
 @Table(name = "student")
 public class Student{
     @Id
-    private int Studentid;
+    private Long Studentid;
     @ManyToOne
     @JoinColumn(name = "Userid")
     private User User;

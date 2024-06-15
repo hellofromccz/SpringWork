@@ -30,7 +30,7 @@ public class ClassroomServiceImpl implements ClassroomService {
     }
 
     @Override
-    public Classroom deleteById(int id) {
+    public Classroom deleteById(Long id) {
         Classroom classroom = classroomRepository.findById(id).orElse(null);
         if (classroom != null) {
             classroomRepository.deleteById(id);
@@ -41,5 +41,10 @@ public class ClassroomServiceImpl implements ClassroomService {
     @Override
     public Classroom updateClassroom(Classroom classroom) {
         return classroomRepository.save(classroom);
+    }
+
+    @Override
+    public Classroom getClassroomById(Long classroomId) {
+        return classroomRepository.findById(classroomId).orElse(null);
     }
 }

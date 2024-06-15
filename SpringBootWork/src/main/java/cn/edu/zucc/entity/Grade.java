@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Table(name = "grade")
 public class Grade {
     @Id
-    private int gradeId;
+    private Long gradeId;
 
     @ManyToOne
     @JoinColumn(name = "studentid", referencedColumnName = "Studentid")

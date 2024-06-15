@@ -7,7 +7,7 @@ import java.util.*;
 @Table(name = "opinion")
 public class Opinion {
     @Id
-    private int opinionId;
+    private Long opinionId;
 
     @Column(name = "opinioncontent")
     private String opinionContent;

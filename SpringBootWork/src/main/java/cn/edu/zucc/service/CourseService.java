@@ -1,5 +1,6 @@
 package cn.edu.zucc.service;
 
+import cn.edu.zucc.dto.CourseModifyRequest;
 import cn.edu.zucc.entity.Course;
 import org.springframework.stereotype.Service;
 

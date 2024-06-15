@@ -1,5 +1,6 @@
 package cn.edu.zucc.entity;
 
+import cn.edu.zucc.dto.CourseModifyRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
@@ -11,9 +12,9 @@ import java.util.*;
 @Table(name = "course")
 public class Course {
     @Id
-    @Column(name = "Courseid")
+    @Column(name = "Courseid", columnDefinition = "int(9) UNSIGNED ZEROFILL")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int courseId;
+    private Long courseId;
 
     @Column(name = "Coursename")
     private String courseName;
@@ -41,4 +42,6 @@ public class Course {
     @Column(name = "Coursetime")
     private String courseTime;
 
+//    @ManyToMany(mappedBy = "coursesTaught")
+//    private Set<Teacher> teachers;
 }
