@@ -171,11 +171,21 @@
 					data: "default"
 				};
 				console.log(body);
-				axios.post("/admin/course_management/", body)
+				axios.post("/course/get_all_courses", body)
 					.then(response => {
 						console.log("得到回应", response.data);
-						if (response.data.code == "1") {
-							this.courses = response.data.courses;
+						if (response.data!=null) {
+							this.courses = response.data;
+							this.courses = this.courses.map(course => {
+								return {
+									id: course.courseId,
+									name: course.courseName,
+									credit: course.credit,
+									teacher: course.courseTeacher.user.name,
+									classroom: course.classroom.classroomName,
+									time: course.courseTime,
+								};
+							});
 						} else if (response.data.code == "-1") {
 							console.log(response.data.message);
 						} else {
