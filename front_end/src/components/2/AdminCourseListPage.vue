@@ -5,7 +5,7 @@
 			<VaTabs v-model="value" style="margin-bottom: 10px;">
 				<template #tabs>
 					<VaTab icon="va-plus" label="添加课程" @click="add" />
-					<VaTab icon="va-minus" label="删除所有" @click="deleteAll" />
+					<!-- <VaTab icon="va-minus" label="删除所有" @click="deleteAll" /> -->
 					<VaTab icon="book" label="筛选与查询" @click="select" />
 				</template>
 			</VaTabs>

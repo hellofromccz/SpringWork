@@ -104,16 +104,34 @@
         },
         computed: {
             ...mapState(['id']), // 映射state中的id到本组件的computed属性id
+            courseId() {
+                return this.$route.params.id || null; // 如果id不存在，则默认为null
+            },
         },
         methods:{
             getCourseByDefault(){
-                const body = {uid: this.id, oid: this.$route.params.oid};
+                const body = {courseId:Number(this.$route.params.oid)};
+                // const body = {uid: this.id, oid: this.$route.params.oid};
                 console.log(body);
-                axios.post("/teacher/show_course", body) // 后端没处理/admin/show_course的请求，只有teacher/show_course的
+                axios.post("/course/get_details", body) // 后端没处理/admin/show_course的请求，只有teacher/show_course的
                     .then(response =>{
                         console.log("得到回应", response.data);
-                        if(response.data.code == "1"){
+                        if(response.data!=null){
                             this.course = response.data.course;
+                            this.course = {
+                                id: response.data[0].courseId,
+                                name: response.data[0].courseName,
+                                credit: response.data[0].credit,
+                                time: response.data[0].courseTime,
+                                campusName: response.data[0].campusName,
+                                classroomId: response.data[0].classroom.classroomID,
+                                classroomName: response.data[0].classroom.classroomName,
+                                teacherId: response.data[0].courseTeacher.teacherID,
+                                teacherName: response.data[0].courseTeacher.user.name,
+                                capacity: response.data[0].courseCapacity,
+                                size: response.data[0].numberOfStudents,
+                                compulsory: response.data[0].compulsory
+                            }
                         }else if(response.data.code == "-1"){
                             console.log(response.data.message);
                         }else{

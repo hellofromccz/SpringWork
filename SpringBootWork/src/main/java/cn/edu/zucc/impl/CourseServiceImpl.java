@@ -1,6 +1,7 @@
 package cn.edu.zucc.impl;
 
 import cn.edu.zucc.entity.Course;
+import cn.edu.zucc.entity.User;
 import cn.edu.zucc.repository.CourseRepository;
 import cn.edu.zucc.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,17 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Optional<Course> getCourseById(Long courseId) {
-        return courseRepository.findById(courseId);
+    public Course getCourseById(Long courseId) {
+        return courseRepository.findById(courseId).orElse(null);
+    }
+
+    @Override
+    public List<Course> getDetailsById(Long courseId) {
+        List<Course> courseList = courseRepository.getDetailsById(courseId);
+        if (courseList == null) {
+            return null;
+        } else {
+            return courseList;
+        }
     }
 }
