@@ -9,38 +9,38 @@ import java.util.StringJoiner;
 @Data
 @Table(name = "user")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "UserID", columnDefinition = "int(9) UNSIGNED ZEROFILL")
+    @Column(name = "UserID")
     private Long userId;
 
-    @Column(name = "Name", nullable = false, length = 255)
+    @Column(name = "Name", nullable = false)
     private String name;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "Status", nullable = false, length = 1)
+    @Column(name = "Status", nullable = false)
     private Status status;
 
-    @Column(name = "Password", nullable = true, length = 255, columnDefinition = "varchar(255) default '00000000'")
+    @Column(name = "Password", nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "Gender", nullable = false, length = 1)
+    @Column(name = "Gender", nullable = false)
     private Gender gender;
 
-    @Column(name = "Age", nullable = true)
-    private Integer age;
+    @Column(name = "Age", nullable = false)
+    private int age;
 
-    @Column(name = "Phone", nullable = false, length = 255)
+    @Column(name = "Phone", nullable = false)
     private String phone;
 
-    @Column(name = "Email", nullable = false, length = 255)
+    @Column(name = "Email", nullable = false)
     private String email;
 
-    @Column(name = "Address", nullable = false, length = 255)
+    @Column(name = "Address", nullable = false)
     private String address;
 
+    // 枚举类型定义
     public enum Status {
         SA, A, T, S
     }

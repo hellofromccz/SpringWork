@@ -9,8 +9,8 @@ import javax.persistence.*;
 @Table(name = "classroom")
 public class Classroom {
     @Id
-    @Column(name = "ClassroomID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ClassroomID")
     private int classroomID;
 
     @Column(name = "ClassroomName")
@@ -29,5 +29,4 @@ public class Classroom {
     public enum SpecialConditions {
         无设备, 有投影仪, 有电脑, 有投影仪和电脑
     }
-    // 省略getter和setter方法
 }

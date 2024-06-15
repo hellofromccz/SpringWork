@@ -4,34 +4,31 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.*;
 
 @Data
 @Entity
 @Table(name = "course")
 public class Course {
     @Id
-    @Column(name = "CourseID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int courseID;
+    @Column(name = "Courseid")
+    private int courseid;
 
-    @Column(name = "CourseName")
-    private String courseName;
+    @Column(name = "Coursename")
+    private String coursename;
 
     @Column(name = "Credit")
     private double credit;
 
-    @Lob
-    @Column(name = "CourseTime")
-    private String courseTime; // 这里假设CourseTime是字符串格式，实际可能需要转换为相应的对象
+//    @Column(name = "Classroomid")
+//    private int classroomid;
 
-    @Column(name = "ClassroomID")
-    private int classroomID;
+    @Column(name = "Courseteacherid")
+    private int courseteacherid;
 
-    @Column(name = "CourseTeacherID")
-    private int courseTeacherID;
-
-    @Column(name = "CourseCapacity")
-    private int courseCapacity;
+    @Column(name = "Coursecapacity")
+    private int coursecapacity;
 
     @Column(name = "Number_of_Student_taking_Course")
     private int numberOfStudentTakingCourse;
@@ -39,19 +36,21 @@ public class Course {
     @Column(name = "Compulsory_or_not")
     private int compulsoryOrNot;
 
-    @Column(name = "AssessmentMethod")
-    private String assessmentMethod;
+    @Column(name = "Coursetime")
+    private String coursetime;
 
-    // 定义关联
     @ManyToOne
-    @JoinColumn(name = "ClassroomID", referencedColumnName = "ClassroomID", insertable = false, updatable = false)
-    @JsonIgnore
+    @JoinColumn(name = "Classroomid", referencedColumnName = "ClassroomID", insertable = false, updatable = false)
     private Classroom classroom;
 
-    @ManyToOne
-    @JoinColumn(name = "CourseTeacherID", referencedColumnName = "UserID", insertable = false, updatable = false)
-    @JsonIgnore
-    private User courseTeacher;
+    @ManyToMany
+    @JoinTable(
+            name = "student_select_course",
+            joinColumns = @JoinColumn(name = "CourseID"),
+            inverseJoinColumns = @JoinColumn(name = "StudentID")
+    )
+    private Collection<Student> students;
 
-    // 省略getter和setter方法
+    @ManyToMany(mappedBy = "coursesTaught")
+    private Set<Teacher> teachers;
 }
