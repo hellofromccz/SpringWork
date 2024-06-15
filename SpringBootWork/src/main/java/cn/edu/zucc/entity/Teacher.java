@@ -8,15 +8,10 @@ import java.util.*;
 @Data
 @Entity
 @Table(name = "teacher")
-public class Teacher extends User {
-    @Column(name = "AvailableTime", columnDefinition = "json")
-    private String availableTime;
-
-    @ManyToMany
-    @JoinTable(
-            name = "teacher_teach_course",
-            joinColumns = @JoinColumn(name = "TeacherID"),
-            inverseJoinColumns = @JoinColumn(name = "CourseID")
-    )
-    private Set<Course> coursesTaught;
+public class Teacher{
+    @Id
+    private int TeacherID;
+    @ManyToOne
+    @JoinColumn(name = "UserID")
+    private User User;
 }

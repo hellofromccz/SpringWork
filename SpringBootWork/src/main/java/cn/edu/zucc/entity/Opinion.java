@@ -7,16 +7,15 @@ import java.util.*;
 @Table(name = "opinion")
 public class Opinion {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long opinionID;
+    private int opinionId;
 
-    @Column
+    @Column(name = "opinioncontent")
     private String opinionContent;
 
     @ManyToOne
-    @JoinColumn(name = "userID")
+    @JoinColumn(name = "userid", referencedColumnName = "UserID")
     private User user;
 
-    @OneToMany(mappedBy = "opinion")
-    private Set<Reply> replies;
+    @Column(name = "isreply")
+    private String isReply;
 }
