@@ -132,7 +132,7 @@
 		name: 'AdminCourseListPage',
 		computed: {
 			isValid() {
-				return this.new_course.name && this.new_course.credit && this.new_course.teacherId && this.new_course.classroomId && this.new_course.capacity && this.new_course.AssessmentMethod && this.time.length!=0;
+				return this.new_course.name && this.new_course.credit && this.new_course.teacherId && this.new_course.classroomId && this.new_course.capacity && this.time.length!=0;
 			}
 		},
 		props: {
@@ -237,11 +237,11 @@
 					id: this.uid,
 					course: this.new_course
 				};
-				console.log(body);
-				axios.post("/admin/course_management/add", body)
+				console.log('这是body:',body);
+				axios.post("/course/add_course", body)
 					.then(response => {
 						console.log("得到回应", response.data);
-						if (response.data.code == "1") {
+						if (response.data!=null) {
 							this.getCoursesDefault();
 							this.new_course = {
 								name: '',
@@ -295,15 +295,25 @@
 			},
 			comfirmSelect() {
 				const body = {
-					uid: this.uid,
-					data: this.condition
+					// uid: this.uid,
+					name: this.condition
 				};
-				console.log(body);
-				axios.post("/admin/course_management/get_by_name", body)
+				console.log("这是body:", body);
+				axios.post("/course/get_info_by_name", body)
 					.then(response => {
 						console.log("得到回应", response.data);
-						if (response.data.code == "1") {
-							this.courses = response.data.courses;
+						if(response.data!=null){
+							this.courses = response.data;
+							this.courses = this.courses.map(course => {
+								return {
+									id: course.courseId,
+									name: course.courseName,
+									credit: course.credit,
+									teacher: course.courseTeacher.user.name,
+									classroom: course.classroom.classroomName,
+									time: course.courseTime,
+								};
+							});
 						} else if (response.data.code == "-1") {
 							console.log(response.data.message);
 						} else {

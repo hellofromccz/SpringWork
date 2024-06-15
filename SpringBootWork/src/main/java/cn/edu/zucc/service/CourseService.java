@@ -14,5 +14,5 @@ public interface CourseService {
     Course updateCourse(Course course);
     void deleteCourse(Long courseId);
     List<Course> getDetailsById(Long courseId);
-
+    List<Course> getInfoByName(String name);
 }

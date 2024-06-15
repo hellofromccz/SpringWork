@@ -52,4 +52,15 @@ public class CourseServiceImpl implements CourseService {
             return courseList;
         }
     }
+
+    @Override
+    public List<Course> getInfoByName(String name) {
+        List<Course> courseList = courseRepository.getInfoByName(name);
+        if (courseList != null) {
+            return courseList;
+        } else {
+            System.err.println("没有找到该课程");
+            return courseList;
+        }
+    }
 }
