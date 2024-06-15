@@ -42,6 +42,19 @@ public class Course {
     @Column(name = "Coursetime")
     private String courseTime;
 
-//    @ManyToMany(mappedBy = "coursesTaught")
-//    private Set<Teacher> teachers;
+    @ManyToMany
+    @JoinTable(
+            name = "teacher_teach_course",
+            joinColumns = @JoinColumn(name = "Courseid"),
+            inverseJoinColumns = @JoinColumn(name = "TeacherID")
+    )
+    private Set<Teacher> teachers;
+
+    @ManyToMany
+    @JoinTable(
+            name = "student_select_course",
+            joinColumns = @JoinColumn(name = "Courseid"),
+            inverseJoinColumns = @JoinColumn(name = "Studentid")
+    )
+    private Set<Student> students;
 }

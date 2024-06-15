@@ -10,8 +10,14 @@ import java.util.*;
 @Table(name = "student")
 public class Student{
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Studentid;
-    @ManyToOne
+
+    @OneToOne
     @JoinColumn(name = "Userid")
     private User User;
+
+    @ManyToMany
+    // 映射和属性定义...
+    private Set<Course> courses;
 }

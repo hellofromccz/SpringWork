@@ -10,17 +10,14 @@ import java.util.*;
 @Table(name = "teacher")
 public class Teacher{
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long TeacherID;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "UserID")
     private User User;
 
-//    @ManyToMany
-//    @JoinTable(
-//            name = "teacher_select_course",
-//            joinColumns = @JoinColumn(name = "Teacherid"),
-//            inverseJoinColumns = @JoinColumn(name = "Courseid")
-//    )
-//    private Set<Course> coursesTaught = new HashSet<>();
+    @ManyToMany
+    // 映射和属性定义...
+    private Set<Course> courses;
 }
