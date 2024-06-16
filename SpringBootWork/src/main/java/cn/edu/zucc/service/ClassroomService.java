@@ -13,4 +13,5 @@ public interface ClassroomService {
     Classroom deleteById(Long id);
     Classroom updateClassroom(Classroom classroom);
     Classroom getClassroomById(Long classroomId);
+    void deleteClassroom(Long classroomId);
 }
