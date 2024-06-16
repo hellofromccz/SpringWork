@@ -145,11 +145,20 @@
 					data: "default"
 				};
 				console.log(body);
-				axios.post("/admin/classroom_management/", body)
+				axios.get("/classrooms", body)
 					.then(response => {
 						console.log("得到回应", response.data);
-						if (response.data.code == "1") {
-							this.classrooms = response.data.classrooms;
+						if (response.data!=null) {
+							this.classrooms = response.data;
+							this.classrooms = this.classrooms.map((classroom) => {
+								return {
+									id: classroom.ClassroomID,
+									campus: classroom.Campusinformation,
+									name: classroom.Classroomname,
+									capacity: classroom.Classroomcapacity,
+									condition: classroom.Special_Conditions_of_Classrooms
+								};
+							});
 						} else if (response.data.code == "-1") {
 							console.log(response.data.message);
 						} else {
@@ -188,7 +197,7 @@
             comfirmAdd(){
                 const body = {uid: this.uid, classroom: this.new_classroom};
                 console.log(body);
-                axios.post("/admin/classroom_management/add", body)
+                axios.post("/classrooms/addClassroom", body)
                     .then(response =>{
                         console.log("得到回应", response.data);
                         if(response.data.code == "1"){
