@@ -18,7 +18,7 @@
 							<input v-model="new_classroom.campus" required="required">
 						</div>
 						<div class="add-item">
-							<div class="add-item-name">位置 </div>
+							<div class="add-item-name">名称 </div>
 							<input v-model="new_classroom.name" required="required">
 						</div>
 						<div class="add-item">
@@ -58,7 +58,7 @@
 								<tr>
 									<th>ID</th>
 									<th>校区</th>
-									<th>位置</th>
+									<th>名称</th>
 									<th>容量</th>
 									<th>设备信息</th>
 
