@@ -6,7 +6,7 @@
 			<VaTabs v-model="value" style="margin-bottom: 10px;">
 				<template #tabs>
 					<VaTab icon="va-plus" label="添加教室" @click="add" />
-					<VaTab icon="va-minus" label="删除所有" @click="deleteAll" />
+					<!-- <VaTab icon="va-minus" label="删除所有" @click="deleteAll" /> -->
 					<VaTab icon="book" label="筛选与查询" @click="select" />
 				</template>
 			</VaTabs>
@@ -66,11 +66,11 @@
 							</thead>
 							<tbody>
 								<tr v-for="classroom in classrooms" :key="classroom.id" @click="showDetail(classroom)">
-									<td>{{ classroom.id }}</td>
-									<td>{{ classroom.campus }}</td>
-									<td>{{ classroom.name }}</td>
-									<td>{{ classroom.capacity }}</td>
-									<td>{{ classroom.condition }}</td>
+									<td>{{ classroom.classroomID }}</td>
+									<td>{{ classroom.Campusinformation }}</td>
+									<td>{{ classroom.Classroomname }}</td>
+									<td>{{ classroom.Classroomcapacity }}</td>
+									<td>{{ classroom.Special_Conditions_of_Classrooms }}</td>
 									<td v-if="selected_classroom.id == classroom.id">
 										<VaButton size="small" color="danger" @click="deleteSelected(classroom)">删除
 										</VaButton>
@@ -145,11 +145,11 @@
 					data: "default"
 				};
 				console.log(body);
-				axios.post("/admin/classroom_management/", body)
+				axios.get("/classrooms", body)
 					.then(response => {
 						console.log("得到回应", response.data);
-						if (response.data.code == "1") {
-							this.classrooms = response.data.classrooms;
+						if (response.data!=null) {
+							this.classrooms = response.data;
 						} else if (response.data.code == "-1") {
 							console.log(response.data.message);
 						} else {

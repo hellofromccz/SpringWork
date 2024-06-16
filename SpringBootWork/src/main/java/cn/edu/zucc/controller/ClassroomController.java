@@ -27,6 +27,7 @@ public class ClassroomController {
     public Classroom addClassroom(@RequestBody Classroom classroom) {
         return classroomService.addClassroom(classroom);
     }
+
     @DeleteMapping("/{id}")
     public Classroom deleteById(@PathVariable Long id) {
         return classroomService.deleteById(id);
