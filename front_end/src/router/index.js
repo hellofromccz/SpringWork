@@ -10,6 +10,7 @@ import AdminUserDetailView from '../views/Admin/AdminUserDetailView.vue'
 import AdminClassroomView from '../views/Admin/AdminClassroomView.vue'
 import AdminCourseView from '../views/Admin/AdminCourseView.vue'
 import AdminCourseDetailView from '../views/Admin/AdminCourseDetailView.vue'
+// import AdminGradeView from '../views/Admin/AdminGradeView.vue'
 import TeacherView from '../views/Teacher/TeacherView.vue'
 import TeacherInfoView from '../views/Teacher/TeacherInfoView.vue'
 import TeacherCourseView from '../views/Teacher/TeacherCourseView.vue'
@@ -79,6 +80,10 @@ const router = createRouter({
     name:'admin-course',
     component: AdminCourseView
     },
+    // {path:'/admin/grade',
+    // name:'admin-grade',
+    // component: AdminGradeView
+    // },
     {path:'/admin/course/detail/:oid',
     name:'admin-course-detail',
     component: AdminCourseDetailView

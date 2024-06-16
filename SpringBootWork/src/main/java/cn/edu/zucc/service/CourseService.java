@@ -10,10 +10,16 @@ import java.util.Optional;
 @Service
 public interface CourseService {
     Course getCourseById(Long courseId);
+
     List<Course> getAllCourses();
+
     Course createCourse(Course course);
+
     Course updateCourse(Course course);
+
     void deleteCourse(Long courseId);
+
     List<Course> getDetailsById(Long courseId);
+
     List<Course> getInfoByName(String name);
 }

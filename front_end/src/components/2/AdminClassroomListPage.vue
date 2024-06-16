@@ -6,7 +6,7 @@
 			<VaTabs v-model="value" style="margin-bottom: 10px;">
 				<template #tabs>
 					<VaTab icon="va-plus" label="添加教室" @click="add" />
-					<VaTab icon="va-minus" label="删除所有" @click="deleteAll" />
+					<!-- <VaTab icon="va-minus" label="删除所有" @click="deleteAll" /> -->
 					<VaTab icon="book" label="筛选与查询" @click="select" />
 				</template>
 			</VaTabs>
@@ -66,11 +66,11 @@
 							</thead>
 							<tbody>
 								<tr v-for="classroom in classrooms" :key="classroom.id" @click="showDetail(classroom)">
-									<td>{{ classroom.id }}</td>
-									<td>{{ classroom.campus }}</td>
-									<td>{{ classroom.name }}</td>
-									<td>{{ classroom.capacity }}</td>
-									<td>{{ classroom.condition }}</td>
+									<td>{{ classroom.classroomID }}</td>
+									<td>{{ classroom.Campusinformation }}</td>
+									<td>{{ classroom.Classroomname }}</td>
+									<td>{{ classroom.Classroomcapacity }}</td>
+									<td>{{ classroom.Special_Conditions_of_Classrooms }}</td>
 									<td v-if="selected_classroom.id == classroom.id">
 										<VaButton size="small" color="danger" @click="deleteSelected(classroom)">删除
 										</VaButton>
@@ -150,15 +150,6 @@
 						console.log("得到回应", response.data);
 						if (response.data!=null) {
 							this.classrooms = response.data;
-							this.classrooms = this.classrooms.map((item) => {
-								return {
-									id: item.ClassroomID,
-									campus: item.Campusinformation,
-									name: item.Classroomname,
-									capacity: item.Classroomcapacity,
-									condition: item.Special_Conditions_of_Classrooms
-								};
-							});
 						} else if (response.data.code == "-1") {
 							console.log(response.data.message);
 						} else {
@@ -195,9 +186,15 @@
                 }
             },
             comfirmAdd(){
-                const body = {uid: this.uid, classroom: this.new_classroom};
+                const body = {
+                      uid: this.uid,
+                      Classroomname: this.new_classroom.name,
+                      Campusinformation: this.new_classroom.campus,
+                      Classroomcapacity: this.new_classroom.capacity,
+                      Special_Conditions_of_Classrooms: this.new_classroom.condition
+                    };
                 console.log(body);
-                axios.post("/admin/classroom_management/add", body)
+                axios.post("/classrooms/addClassroom", body)
                     .then(response =>{
                         console.log("得到回应", response.data);
                         if(response.data.code == "1"){
@@ -248,25 +245,64 @@
                     this.action = 0;
                 }
             },
-            comfirmSelect(){
+            // comfirmSelect() {
+			// 	let classroomName =this.condition.name
+            //   //let classroomName = this.selected_classroom.name;
+            //   axios.get("/classrooms/"+classroomName)
+            //       .then(response => {
+            //         console.log("得到回应", response.data);
+            //         if (response.data!=null)  {
+            //           this.classrooms = response.data.classrooms; // 更新 classrooms 列表
+            //         } else {
+            //           console.log("没有找到匹配的教室");
+            //         }
+            //       })
+            //       .catch(error => {
+            //         console.log('Error', error.message);
+            //       });
+            // },
+			comfirmSelect() {
+				const body = {
+					//id: this.uid,
+					name: this.condition.name
+				};
+				console.log(body);
+              axios.post("/classrooms/get_info_by_name", body)
+                  .then(response => {
+                    console.log("得到回应", response.data);
+                    if (response.data!=null)  {
+                      this.classrooms = response.data; // 更新 classrooms 列表
+                    } else {
+                      console.log("没有找到匹配的教室");
+                    }
+                  })
+                  .catch(error => {
+                    console.log('Error', error.message);
+                  });
+            },
 
 			},
 			deleteSelected(classroom) {
 				console.log("delete", classroom.oid);
-				this.selected_classroom = classroom;
+				this.selected_classroom ={
+        id: classroom.oid,
+        campus: classroom.Campusinformation,
+        name: classroom.Classroomname,
+        };
 				this.showModal = true;
 			},
 			comfirmDeleteSelected() {
+        console.log('selected_classroom.id: ', this.selected_classroom.id);
 				const body = {
 					uid: this.uid,
 					oid: this.selected_classroom.id
 				};
 				console.log("post delete: ", body);
-				axios.post("/admin/classroom_management/delete", body)
+				axios.delete("/classrooms/"+body.oid, body)
 					.then(response => {
 						console.log("得到回应", response.data);
-						if (response.data.code == "1") {
-							this.courses = response.data.courses;
+            if (response.data!=null)  {
+							this.classrooms = response.data.classrooms;
 						} else if (response.data.code == "-1") {
 							console.log(response.data.message);
 						} else {
@@ -296,7 +332,7 @@
 					condition: '',
 				};
 				location.reload();
-			}
+			
 		},
 		mounted() {
 			this.getClassroomsDefault();
