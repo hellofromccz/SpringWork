@@ -43,6 +43,8 @@
           </VaSidebarItemContent>
         </VaSidebarItem> 
 
+        
+
         <VaSidebarItem v-if="permission==3" :active="choice==7" @click="setChoice(7)">
           <VaSidebarItemContent>
             <VaIcon name="book" />
@@ -66,6 +68,13 @@
             <VaSidebarItemTitle>登出</VaSidebarItemTitle>
           </VaSidebarItemContent>
         </VaSidebarItem>
+        
+        <VaSidebarItem v-if="permission<=2" :active="choice==10" @click="setChoice(10)">
+          <VaSidebarItemContent>
+            <VaIcon name="grade" />
+            <VaSidebarItemTitle>成绩管理</VaSidebarItemTitle>
+          </VaSidebarItemContent>
+        </VaSidebarItem> 
       </VaSidebar>
     </div>
   </template>
@@ -151,6 +160,9 @@ export default{
         }else if(this.choice == 9){
           console.log("push to /login");
           this.$router.push("/login");
+        }else if(this.choice == 10){
+          console.log("push to /admin/grade");
+          this.$router.push("/admin/grade");
         }
       },
       setHighlight(x){
