@@ -72,8 +72,10 @@
 									<td>{{ classroom.Classroomcapacity }}</td>
 									<td>{{ classroom.Special_Conditions_of_Classrooms }}</td>
 									<td v-if="selected_classroom.id == classroom.id">
-										<VaButton size="small" color="danger" @click="deleteSelected(classroom)">删除
-										</VaButton>
+<!--										<VaButton size="small" color="danger" @click="deleteSelected(classroom)">删除-->
+<!--                    <VaButton size="small" color="danger" @click="deleteSelected">删除&ndash;&gt;-->
+                    <VaButton size="small" color="danger" @click="deleteSelected(classroom.classroomID)">删除</VaButton>
+
 									</td>
 								</tr>
 							</tbody>
@@ -150,6 +152,13 @@
 						console.log("得到回应", response.data);
 						if (response.data!=null) {
 							this.classrooms = response.data;
+              this.classrooms.forEach(classroom => {
+                console.log('classroomID:', classroom.classroomID);
+                console.log('Campusinformation:', classroom.Campusinformation);
+                console.log('Classroomname:', classroom.Classroomname);
+                console.log('Classroomcapacity:', classroom.Classroomcapacity);
+                console.log('Special_Conditions_of_Classrooms:', classroom.Special_Conditions_of_Classrooms);
+              });
 						} else if (response.data.code == "-1") {
 							console.log(response.data.message);
 						} else {
@@ -173,6 +182,8 @@
 					});  
             },
             showDetail(classroom){
+                this.selected_classroom = classroom;
+                console.log('selected_classroom:', this.selected_classroom);
                 this.selected_classroom = classroom;
                 console.log("select changed");
                 console.log(this.selected_classroom);
@@ -245,22 +256,7 @@
                     this.action = 0;
                 }
             },
-            // comfirmSelect() {
-			// 	let classroomName =this.condition.name
-            //   //let classroomName = this.selected_classroom.name;
-            //   axios.get("/classrooms/"+classroomName)
-            //       .then(response => {
-            //         console.log("得到回应", response.data);
-            //         if (response.data!=null)  {
-            //           this.classrooms = response.data.classrooms; // 更新 classrooms 列表
-            //         } else {
-            //           console.log("没有找到匹配的教室");
-            //         }
-            //       })
-            //       .catch(error => {
-            //         console.log('Error', error.message);
-            //       });
-            // },
+
 			comfirmSelect() {
 				const body = {
 					//id: this.uid,
@@ -280,60 +276,18 @@
                     console.log('Error', error.message);
                   });
             },
-
+        deleteSelected(classroomId){
+          console.log('classroomId:', classroomId);
+          const body = {
+            classroomId: classroomId
+          };
+          console.log(body);
+          axios.post("/classrooms/delete_classroom", body)
+              .then(response => {
+                console.log("得到回应", response.data);
+              });
+        },
 			},
-			deleteSelected(classroom) {
-				console.log("delete", classroom.oid);
-				this.selected_classroom ={
-        id: classroom.oid,
-        campus: classroom.Campusinformation,
-        name: classroom.Classroomname,
-        };
-				this.showModal = true;
-			},
-			comfirmDeleteSelected() {
-        console.log('selected_classroom.id: ', this.selected_classroom.id);
-				const body = {
-					uid: this.uid,
-					oid: this.selected_classroom.id
-				};
-				console.log("post delete: ", body);
-				axios.delete("/classrooms/delete_classroom", body)
-					.then(response => {
-						console.log("得到回应", response.data);
-            if (response.data!=null)  {
-							this.classrooms = response.data.classrooms;
-						} else if (response.data.code == "-1") {
-							console.log(response.data.message);
-						} else {
-							console.log("unhandled code, ", response.data.code);
-						}
-					})
-					.catch(error => {
-						if (error.response) {
-							// 根据错误响应状态码进行处理
-							console.log(error.response.data);
-							console.log(error.response.status);
-							console.log(error.response.headers);
-						} else if (error.request) {
-							// 处理没有收到响应的情况
-							console.log(error.request);
-						} else {
-							// 处理其他错误情况
-							console.log('Error', error.message);
-						}
-						console.log(error.config);
-					});
-				this.selected_classroom = {
-					id: 0,
-					campus: '',
-					name: '',
-					capacity: '',
-					condition: '',
-				};
-				location.reload();
-			
-		},
 		mounted() {
 			this.getClassroomsDefault();
 		}

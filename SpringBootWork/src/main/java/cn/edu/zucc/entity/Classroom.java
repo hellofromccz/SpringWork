@@ -11,6 +11,7 @@ import javax.persistence.*;
 public class Classroom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("ClassroomID")
     @Column(name = "ClassroomID", columnDefinition = "int(9) UNSIGNED ZEROFILL")
     private Long classroomID;
 
