@@ -318,7 +318,7 @@
 									name: course.courseName,
 									credit: course.credit,
 									teacher: course.courseTeacher.user.name,
-									classroom: course.classroom.classroomName,
+									classroomName: course.classroom.Classroomname,
 									time: course.courseTime,
 								};
 							});
