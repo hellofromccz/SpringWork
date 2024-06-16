@@ -63,4 +63,15 @@ public class CourseServiceImpl implements CourseService {
             return courseList;
         }
     }
+
+    @Override
+    public List<Course> getInfoByTeacherId(Long teacherId) {
+        List<Course> courseList = courseRepository.getInfoByTeacherId(teacherId);
+        if (courseList != null) {
+            return courseList;
+        } else {
+            System.err.println("没有找到该教师的课程");
+            return courseList;
+        }
+    }
 }
