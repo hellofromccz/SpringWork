@@ -112,7 +112,7 @@
 									<td>{{ course.id }}</td>
 									<td>{{ course.credit }}</td>
 									<td>{{ course.teacher }}</td>
-									<td>{{ course.classroom }}</td>
+									<td>{{ course.classroomName }}</td>
 									<td>{{ course.time }}</td>
 								</tr>
 							</tbody>
@@ -182,7 +182,7 @@
 									name: course.courseName,
 									credit: course.credit,
 									teacher: course.courseTeacher.user.name,
-									classroom: course.classroom.classroomName,
+									classroomName: course.classroom.Classroomname,
 									time: course.courseTime,
 								};
 							});
