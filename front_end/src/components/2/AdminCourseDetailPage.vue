@@ -124,7 +124,7 @@
                                 time: response.data[0].courseTime,
                                 campusName: response.data[0].campusName,
                                 classroomId: response.data[0].classroom.classroomID,
-                                classroomName: response.data[0].classroom.classroomName,
+                                classroomName: response.data[0].classroom.Classroomname,
                                 teacherId: response.data[0].courseTeacher.teacherID,
                                 teacherName: response.data[0].courseTeacher.user.name,
                                 capacity: response.data[0].courseCapacity,

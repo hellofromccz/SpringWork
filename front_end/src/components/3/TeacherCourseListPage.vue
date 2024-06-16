@@ -4,7 +4,27 @@
         <div class="content">
             <VaCard style="margin-bottom: 10px; margin-top: 10px;">
                 <VaCardContent>
-                    <div class="list">
+                    <div class="va-table-responsive">
+                        <table class="va-table va-table--hover va-table--clickable">
+                            <thead>
+                                <tr>
+                                    <th>课程名称</th>
+                                    <th>学分</th>
+                                    <th>时间</th>
+                                    <th>教室</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="course in courses" :key="course.id" @click="showDetail(teacher.id)">
+                                    <td>{{ course.name }}</td>
+                                    <td>{{ course.credit }}</td>
+                                    <td>{{ course.time }}</td>
+                                    <td>{{ course.classroomName }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- <div class="list">
                         <div class="item" v-for="(course, index) in courses"
                         :key="index"
                         @click="showDetail(course.id)">
@@ -13,7 +33,7 @@
                                 <div class="caption">学分：{{ course.credit }}&emsp;&emsp;时间{{ course.time }}&emsp;&emsp;教室：{{ course.classroom }}</div>
                             </VaListItemSection>       
                         </div>
-                    </div> 
+                    </div>  -->
                 </VaCardContent>             
             </VaCard>
 
@@ -55,13 +75,22 @@
         },
         methods:{
             getCourses(){
-                const body = {uid: this.uid, oid: this.oid};
+                const body = {uid: this.uid};
                 console.log(body);
-                axios.post("/teacher/show_courses", body)
+                axios.post("/course/get_info_by_teacher", body)
                     .then(response =>{
                         console.log("得到回应", response.data);
-                        if(response.data.code == "1" || response.data.code == "2"){
-                            this.courses = response.data.courses;
+                        if (response.data!=null){
+                            this.courses = response.data;
+                            this.courses = this.courses.map(course => {
+								return {
+									id: course.courseId,
+									name: course.courseName,
+									credit: course.credit,
+									classroomName: course.classroom.Classroomname,
+									time: course.courseTime,
+								};
+							});
                         }else if(response.data.code == "-1"){
                             console.log(response.data.message);
                         }else{

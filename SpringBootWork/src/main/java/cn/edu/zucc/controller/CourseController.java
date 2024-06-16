@@ -1,13 +1,11 @@
 package cn.edu.zucc.controller;
 
-import cn.edu.zucc.dto.CourseDetailRequest;
-import cn.edu.zucc.dto.CourseModifyRequest;
-import cn.edu.zucc.dto.CourseNameRequest;
-import cn.edu.zucc.dto.CourseReq1;
+import cn.edu.zucc.dto.*;
 import cn.edu.zucc.entity.*;
 import cn.edu.zucc.service.ClassroomService;
 import cn.edu.zucc.service.CourseService;
 import cn.edu.zucc.service.TeacherService;
+import cn.edu.zucc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -108,6 +106,20 @@ public class CourseController {
         String name = courseNameRequest.getName();
         System.out.println(name);
         List<Course> courseList = courseService.getInfoByName(name);
+        if (courseList == null) {
+            return ResponseEntity.status(500).body("Internal Server Error");
+        } else {
+            return ResponseEntity.ok(courseList);
+        }
+    }
+
+    @PostMapping("/get_info_by_teacher")
+    public ResponseEntity<?> getInfoByTeacher(@RequestBody TeacherRequest teacherRequest) {
+        Long userid = teacherRequest.getUid();
+        Teacher teacher = teacherService.getTeacherByUserID(userid);
+        Long id = teacher.getTeacherID();
+        System.out.println(teacher);
+        List<Course> courseList = courseService.getInfoByTeacherId(id);
         if (courseList == null) {
             return ResponseEntity.status(500).body("Internal Server Error");
         } else {
