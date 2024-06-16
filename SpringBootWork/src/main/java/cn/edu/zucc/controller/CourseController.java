@@ -3,7 +3,6 @@ package cn.edu.zucc.controller;
 import cn.edu.zucc.dto.CourseDetailRequest;
 import cn.edu.zucc.dto.CourseModifyRequest;
 import cn.edu.zucc.dto.CourseNameRequest;
-import cn.edu.zucc.dto.CourseReq1;
 import cn.edu.zucc.entity.*;
 import cn.edu.zucc.service.ClassroomService;
 import cn.edu.zucc.service.CourseService;
@@ -29,6 +28,7 @@ public class CourseController {
         this.teacherService = teacherService;
     }
 
+    // TODO:添加课程
     @PostMapping("/add_course")
     public ResponseEntity<?> addCourse(@RequestBody CourseModifyRequest courseModifyRequest) {
         System.out.println(courseModifyRequest);
@@ -53,9 +53,9 @@ public class CourseController {
         }
     }
 
+    // TODO:单个页面进去后可以删除课程
     @PostMapping("/delete_course")
-    public ResponseEntity<?> deleteCourse(@RequestBody CourseDetailRequest courseDetailRequest) {
-        Long courseId = courseDetailRequest.getCourseId();
+    public ResponseEntity<?> deleteCourse(@RequestBody Long courseId) {
         System.out.println(courseId);
         courseService.deleteCourse(courseId);
         return ResponseEntity.ok("Delete course successfully");
@@ -78,22 +78,9 @@ public class CourseController {
         }
     }
 
+    //TODO:修改课程信息
     @PostMapping("/update_course")
-    public ResponseEntity<?> updateCourse(@RequestBody CourseReq1 courseModifyRequest) {
-        System.out.println(courseModifyRequest);
-        Teacher teacher = teacherService.getTeacherById(courseModifyRequest.getTeacherId());
-        Classroom classroom = classroomService.getClassroomById(courseModifyRequest.getClassroomId());
-
-        Course course = new Course();
-        course.setCourseId(courseModifyRequest.getCourseId());
-        course.setCourseName(courseModifyRequest.getName());
-        course.setCredit(courseModifyRequest.getCredit());
-        course.setClassroom(classroom);
-        course.setCourseTeacher(teacher);
-        course.setCourseCapacity(courseModifyRequest.getCapacity());
-        course.setCompulsory(courseModifyRequest.isCompulsory());
-        course.setCourseTime(courseModifyRequest.getCourseTime());
-
+    public ResponseEntity<?> updateCourse(@RequestBody Course course) {
         System.out.println(course);
         Course newCourse = courseService.updateCourse(course);
         if (newCourse == null) {

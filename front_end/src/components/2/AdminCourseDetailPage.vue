@@ -45,7 +45,7 @@
                                 <div class="attribute-content" v-if="edit==false" style="margin-bottom: 10px;">{{ course.assessmentMethod }}</div>
                                 <input v-model="course.assessmentMethod" class="attribute-content" v-if="edit" style="margin-bottom: 10px;">
                                 <VaButton v-if="edit==false" @click="edit=true;" style="width: 60px;">编辑</VaButton>
-                                <VaButton v-if="edit" @click="submit()" style="width: 100px;">保存修改</VaButton>
+                                <VaButton v-if="edit" @click="edit=false;" style="width: 100px;">保存修改</VaButton>
                             </div>
                         </div>
                     </div>
@@ -111,8 +111,9 @@
         methods:{
             getCourseByDefault(){
                 const body = {courseId:Number(this.$route.params.oid)};
+                // const body = {uid: this.id, oid: this.$route.params.oid};
                 console.log(body);
-                axios.post("/course/get_details", body)
+                axios.post("/course/get_details", body) // 后端没处理/admin/show_course的请求，只有teacher/show_course的
                     .then(response =>{
                         console.log("得到回应", response.data);
                         if(response.data!=null){
@@ -153,54 +154,13 @@
 							console.log(error.config);
 					});                  
             },
-            submit(){
-                const body = {
-                    courseId: this.$route.params.oid,
-                    name: this.course.name,
-                    credit: this.course.credit,
-                    courseTime: this.course.time,
-                    classroomId: this.course.classroomId,
-                    teacherId: this.course.teacherId,
-                    capacity: this.course.capacity,
-                    compulsory: this.course.compulsory
-                };
-                console.log("这是body",body);
-                axios.post("/course/update_course", body)
-                    .then(response =>{
-                        console.log("得到回应", response.data);
-                        if(response.data!=null){
-                            this.edit = false;
-                        }else if(response.data.code == "-1"){
-                            console.log(response.data.message);
-                        }else{
-                            console.log("unhandled code, ",response.data.code);
-                        }
-                    })
-                    .catch(error => {
-                        if (error.response) {
-                            // 根据错误响应状态码进行处理
-                                console.log(error.response.data);
-                                console.log(error.response.status);
-                                console.log(error.response.headers);
-                            } else if (error.request) {
-                            // 处理没有收到响应的情况
-                                console.log(error.request);
-                            } else {
-                            // 处理其他错误情况
-                                console.log('Error', error.message);
-                            }
-                            console.log(error.config);
-                    });
-            },
             comfirmDelete(){
-                const body = {
-                    courseId: this.$route.params.oid
-                };
-                console.log("这是body",body);
-                axios.post("/course/delete_course", body) // 后端没处理/admin/show_course的请求，只有teacher/show_course的
+                const body = {uid: this.id, oid: this.$route.params.oid};
+                console.log(body);
+                axios.post("/admin/course_management/delete", body) // 后端没处理/admin/show_course的请求，只有teacher/show_course的
                     .then(response =>{
                         console.log("得到回应", response.data);
-                        if(response.data!=null){
+                        if(response.data.code == "1"){
                             this.$router.push("/admin/course");
                         }else if(response.data.code == "-1"){
                             console.log(response.data.message);
