@@ -245,13 +245,33 @@
                     this.action = 0;
                 }
             },
-            comfirmSelect() {
-              let classroomName = this.selected_classroom.name;
-              axios.get("/classrooms/"+classroomName)
+            // comfirmSelect() {
+			// 	let classroomName =this.condition.name
+            //   //let classroomName = this.selected_classroom.name;
+            //   axios.get("/classrooms/"+classroomName)
+            //       .then(response => {
+            //         console.log("得到回应", response.data);
+            //         if (response.data!=null)  {
+            //           this.classrooms = response.data.classrooms; // 更新 classrooms 列表
+            //         } else {
+            //           console.log("没有找到匹配的教室");
+            //         }
+            //       })
+            //       .catch(error => {
+            //         console.log('Error', error.message);
+            //       });
+            // },
+			comfirmSelect() {
+				const body = {
+					//id: this.uid,
+					name: this.condition.name
+				};
+				console.log(body);
+              axios.post("/classrooms/get_info_by_name", body)
                   .then(response => {
                     console.log("得到回应", response.data);
                     if (response.data!=null)  {
-                      this.classrooms = response.data.classrooms; // 更新 classrooms 列表
+                      this.classrooms = response.data; // 更新 classrooms 列表
                     } else {
                       console.log("没有找到匹配的教室");
                     }
