@@ -312,7 +312,7 @@
 					condition: '',
 				};
 				location.reload();
-			}
+			
 		},
 		mounted() {
 			this.getClassroomsDefault();
