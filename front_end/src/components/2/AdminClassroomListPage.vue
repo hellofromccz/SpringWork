@@ -145,11 +145,20 @@
 					data: "default"
 				};
 				console.log(body);
-				axios.post("/admin/classroom_management/", body)
+				axios.get("/classrooms", body)
 					.then(response => {
 						console.log("得到回应", response.data);
-						if (response.data.code == "1") {
-							this.classrooms = response.data.classrooms;
+						if (response.data!=null) {
+							this.classrooms = response.data;
+							this.classrooms = this.classrooms.map((item) => {
+								return {
+									id: item.ClassroomID,
+									campus: item.Campusinformation,
+									name: item.Classroomname,
+									capacity: item.Classroomcapacity,
+									condition: item.Special_Conditions_of_Classrooms
+								};
+							});
 						} else if (response.data.code == "-1") {
 							console.log(response.data.message);
 						} else {
