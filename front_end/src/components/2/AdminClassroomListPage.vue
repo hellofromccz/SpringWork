@@ -186,9 +186,15 @@
                 }
             },
             comfirmAdd(){
-                const body = {uid: this.uid, classroom: this.new_classroom};
+                const body = {
+                      uid: this.uid,
+                      Classroomname: this.new_classroom.name,
+                      Campusinformation: this.new_classroom.campus,
+                      Classroomcapacity: this.new_classroom.capacity,
+                      Special_Conditions_of_Classrooms: this.new_classroom.condition
+                    };
                 console.log(body);
-                axios.post("/admin/classroom_management/add", body)
+                axios.post("/classrooms/addClassroom", body)
                     .then(response =>{
                         console.log("得到回应", response.data);
                         if(response.data.code == "1"){
@@ -239,25 +245,44 @@
                     this.action = 0;
                 }
             },
-            comfirmSelect(){
+            comfirmSelect() {
+              let classroomName = this.selected_classroom.name;
+              axios.get("/classrooms/"+classroomName)
+                  .then(response => {
+                    console.log("得到回应", response.data);
+                    if (response.data!=null)  {
+                      this.classrooms = response.data.classrooms; // 更新 classrooms 列表
+                    } else {
+                      console.log("没有找到匹配的教室");
+                    }
+                  })
+                  .catch(error => {
+                    console.log('Error', error.message);
+                  });
+            },
 
 			},
 			deleteSelected(classroom) {
 				console.log("delete", classroom.oid);
-				this.selected_classroom = classroom;
+				this.selected_classroom ={
+        id: classroom.oid,
+        campus: classroom.Campusinformation,
+        name: classroom.Classroomname,
+        };
 				this.showModal = true;
 			},
 			comfirmDeleteSelected() {
+        console.log('selected_classroom.id: ', this.selected_classroom.id);
 				const body = {
 					uid: this.uid,
 					oid: this.selected_classroom.id
 				};
 				console.log("post delete: ", body);
-				axios.post("/admin/classroom_management/delete", body)
+				axios.delete("/classrooms/"+body.oid, body)
 					.then(response => {
 						console.log("得到回应", response.data);
-						if (response.data.code == "1") {
-							this.courses = response.data.courses;
+            if (response.data!=null)  {
+							this.classrooms = response.data.classrooms;
 						} else if (response.data.code == "-1") {
 							console.log(response.data.message);
 						} else {
