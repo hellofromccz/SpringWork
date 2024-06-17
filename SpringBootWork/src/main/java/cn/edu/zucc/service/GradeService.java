@@ -12,4 +12,10 @@ public interface GradeService {
     List<Grade> getAllGrades();
 
     Grade getGradeById(Long gradeId);
+
+    List<Grade> getDetailsById(Long gradeId);
+
+    void deleteGrade(Long gradeId);
+
+    Grade updateGrade(Grade grade);
 }

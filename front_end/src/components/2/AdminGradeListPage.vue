@@ -1,6 +1,6 @@
 <template>
 	<div class="container">
-		<h1>成绩管理</h1>
+		<h1>课程管理</h1>
 		<div class="content">
 			<VaTabs v-model="value" style="margin-bottom: 10px;">
 				<template #tabs>
@@ -39,7 +39,7 @@
 			</div>
 			<div class="tool-detail" v-if="action==3">
 				<div class="select-item">
-					<VaInput v-model="condition" placeholder="请输入课程名称" />
+					<VaInput v-model="condition" placeholder="请输入课程ID" />
 					<VaButton @click="comfirmSelect" style="width: 100px; margin-left: 10px;">确认查询</VaButton>
 				</div>
 			</div>
@@ -56,7 +56,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr v-for="grade in grades" :key="grade.gradeid" @click="showDetail(grade.id)">
+								<tr v-for="grade in grades" :key="grade.gradeid" @click="showDetail(grade.gradeid)">
 									<td>{{ grade.courseName }}</td>
 									<td>{{ grade.studentName }}</td>
 									<td>{{ grade.score }}</td>
@@ -99,7 +99,7 @@
 					courseName: '',
 				},
 				grades: [],
-				condition: '请输入课程名称',
+				condition: '',
 			};
 		},
 		methods: {
@@ -109,6 +109,7 @@
 					data: "default"
 				};
 				console.log(body);
+				console.log(this.oid)
 				axios.post("/grade/get_all_grades", body)
 					.then(response => {
 						console.log("得到回应", response.data);
@@ -165,16 +166,9 @@
 					courseid: this.new_grade.courseid,
 					studentid: this.new_grade.studentid,
 					score: this.new_grade.score,
-					// name: this.new_course.name,
-					// credit: this.new_course.credit,
-					// teacherId: this.new_course.teacherId,
-					// classroomId: this.new_course.classroomId,
-					// capacity: this.new_course.capacity,
-					// compulsory: this.new_course.compulsory,
-					// courseTime: this.new_course.time
 				};
 				console.log('这是body:',body);
-				axios.post("/course/add_course", body)
+				axios.post("/grade/add_grade", body)
 					.then(response => {
 						console.log("得到回应", response.data);
 						if (response.data!=null) {
@@ -223,24 +217,24 @@
 			comfirmSelect() {
 				const body = {
 					// uid: this.uid,
-					name: this.condition
+					gradeid:this.condition
 				};
 				console.log("这是body:", body);
-				axios.post("/course/get_info_by_name", body)
+				axios.post("/grade/get_grade_by_id", body)
 					.then(response => {
 						console.log("得到回应", response.data);
 						if(response.data!=null){
 							this.grades = response.data;
-							// this.courses = this.courses.map(course => {
-							// 	return {
-							// 		id: course.courseId,
-							// 		name: course.courseName,
-							// 		credit: course.credit,
-							// 		teacher: course.courseTeacher.user.name,
-							// 		classroomName: course.classroom.Classroomname,
-							// 		time: course.courseTime,
-							// 	};
-							// });
+							this.grades = this.grades.map(grade => {
+								return {
+									gradeid: grade.gradeid,
+									courseid: grade.course.courseId,
+									courseName: grade.course.courseName,
+									studentid: grade.student.studentid,
+									studentName: grade.student.user.name,
+									score: grade.grade,
+								};
+							});
 						} else if (response.data.code == "-1") {
 							console.log(response.data.message);
 						} else {
@@ -264,9 +258,9 @@
 					});
 			},
 			showDetail(oid) {
-				console.log('push to /admin/course/detail...');
+				console.log('push to /admin/grade/detail...');
 				this.$router.push({
-					path: `/admin/course/detail/${oid}`,
+					path: `/admin/grade/detail/${oid}`,
 				});
 			}
 		},

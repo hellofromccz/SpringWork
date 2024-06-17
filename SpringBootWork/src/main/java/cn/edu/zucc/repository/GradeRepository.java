@@ -9,4 +9,6 @@ import java.util.List;
 
 @Repository
 public interface GradeRepository extends JpaRepository<Grade, Long> {
+    @Query(value = "select * from grade where gradeid = ?1", nativeQuery = true)
+    List<Grade> getDetailsById(Long gradeId);
 }

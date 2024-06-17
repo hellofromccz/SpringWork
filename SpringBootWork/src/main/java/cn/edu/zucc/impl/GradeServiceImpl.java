@@ -28,7 +28,27 @@ public class GradeServiceImpl implements GradeService {
     }
 
     @Override
+    public void deleteGrade(Long gradeId) {
+        gradeRepository.deleteById(gradeId);
+    }
+
+    @Override
+    public Grade updateGrade(Grade grade) {
+        return gradeRepository.save(grade);
+    }
+
+    @Override
     public Grade getGradeById(Long gradeId) {
         return gradeRepository.findById(gradeId).orElse(null);
+    }
+
+    @Override
+    public List<Grade> getDetailsById(Long gradeId) {
+        List<Grade> gradeList = gradeRepository.getDetailsById(gradeId);
+        if (gradeList == null) {
+            return null;
+        } else {
+            return gradeList;
+        }
     }
 }
