@@ -66,7 +66,7 @@
 							</thead>
 							<tbody>
 								<tr v-for="classroom in classrooms" :key="classroom.id" @click="showDetail(classroom)">
-									<td>{{ classroom.classroomID }}</td>
+									<td>{{ classroom.ClassroomID }}</td>
 									<td>{{ classroom.Campusinformation }}</td>
 									<td>{{ classroom.Classroomname }}</td>
 									<td>{{ classroom.Classroomcapacity }}</td>
@@ -74,7 +74,7 @@
 									<td v-if="selected_classroom.id == classroom.id">
 <!--										<VaButton size="small" color="danger" @click="deleteSelected(classroom)">删除-->
 <!--                    <VaButton size="small" color="danger" @click="deleteSelected">删除&ndash;&gt;-->
-                    <VaButton size="small" color="danger" @click="deleteSelected(classroom.classroomID)">删除</VaButton>
+                    <VaButton size="small" color="danger" @click="deleteSelected(classroom.ClassroomID)">删除</VaButton>
 
 									</td>
 								</tr>
@@ -153,7 +153,7 @@
 						if (response.data!=null) {
 							this.classrooms = response.data;
               this.classrooms.forEach(classroom => {
-                console.log('classroomID:', classroom.classroomID);
+                console.log('classroomID:', classroom.ClassroomID);
                 console.log('Campusinformation:', classroom.Campusinformation);
                 console.log('Classroomname:', classroom.Classroomname);
                 console.log('Classroomcapacity:', classroom.Classroomcapacity);
